@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "483438876897",
+    "firebase_url": "https://lightspeed-97661-default-rtdb.firebaseio.com",
+    "project_id": "lightspeed-97661",
+    "storage_bucket": "lightspeed-97661.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483438876897:android:192272b9c1fcba5471ffa0",
+        "android_client_info": {
+          "package_name": "com.jacksoncapstone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483438876897-nu1qe4rq2fdjtbshr714o6sq5q2qmqi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDiIx53_LEP26y37MecdoeQRV5y-qbm-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483438876897-nu1qe4rq2fdjtbshr714o6sq5q2qmqi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

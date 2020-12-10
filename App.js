@@ -1,27 +1,173 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import * as React from 'react';
+import { View, ActivityIndicator } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {AuthContext} from "./Components/context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Buffer } from 'buffer';
+import uuid from 'react-native-uuid';
 
-const HelloWorldApp = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-      }}>
-      <Text>Hello, world!</Text>
-      <HomeScreen></HomeScreen>
-    </View>
-  )
-}
-export default HelloWorldApp;
+global.Buffer = Buffer; // very important
 
-const HomeScreen = () => {
+//screen imports
+//if user is signed in
+import HomeScreen from "./Screens/Home/Home";
+import DetailsScreen from "./Screens/Details/Details";
+import MyCharacters from "./Screens/MyCharacters/MyCharacters";
+import CreateCharacter from "./Screens/CreateCharacter/CreateCharacter";
+//if user is signed out
+import FoyerScreen from "./Screens/Foyer/Foyer";
+import LogInScreen from "./Screens/LogIn/LogIn";
+import SignUpScreen from "./Screens/SignUp/SignUp";
+
+//function imports
+import {db} from './src/config';
+
+const Stack = createStackNavigator();
+
+function App() {
+
+  //here we set the default values for the authentication process
+  const initialLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null
+  }
+
+  //this reducer sets loginState to new values according to the action we give it (LOGIN, LOGOUT, etc)
+  const loginReducer = (prevState, action)=>{
+    switch(action.type) {
+      case "RETRIEVE_TOKEN":
+        return {
+          ...prevState,
+          userToken: action.token,
+          isLoading: false
+        };
+      case "LOGIN":
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false
+        };
+      case "LOGOUT":
+        return {
+          ...prevState,
+          userName: null,
+          userToken: null,
+          isLoading: false
+        };
+      case "REGISTER":
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false
+        };
+    }
+  }
+
+  const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState)
+
+  const authContext = React.useMemo(()=>({
+    signIn: async(userName, password)=>{
+      let userToken;
+      userToken = null;
+      if(userName==="user" && password==="password") {
+        userToken="gfgffg";
+        try{
+          await AsyncStorage.setItem("userToken", userToken)
+        } catch(e) {
+          console.log(e);
+        }
+      }
+      dispatch({type: "LOGIN", id: userName, token: userToken})
+    },
+    signOut: async()=>{
+      try{
+        await AsyncStorage.removeItem("userToken")
+      } catch(e) {
+        console.log(e);
+      }
+
+      dispatch({type: "LOGOUT"})
+    },
+    signUp: (username, password, email)=>{
+      //we only set token if username/password combo is unique and valid
+      db.ref('usernames/'+username).once("value", function(snapshot) {
+        if(snapshot.exists()) {
+          console.log("username taken: user not added");
+          register = false;
+        } else {
+          let userToken;
+          userToken=uuid.v1();
+
+          //add the basic user data to the users list
+          db.ref('users/' + userToken).set({
+            username: username,
+            password: password,
+            email: email,
+          });
+          console.log("user added")
+
+          //then add that user's username to the username list
+          db.ref('usernames/'+username).set({
+            username: username
+          })
+
+          dispatch({type: "REGISTER", id: username, token: userToken})
+        }
+    });
+    }
+  }), []);
+
+  //on component lifecycle, retrieve token from async local storage
+  React.useEffect(()=>{
+    setTimeout(async()=>{
+      let userToken;
+      userToken = null;
+      try{
+        userToken = await AsyncStorage.getItem("userToken")
+      } catch(e) {
+        console.log(e);
+      }
+      dispatch({type: "RETRIEVE_TOKEN", token: "xumbu"})
+
+    }, 1000)
+  }, []);
+
+  if(loginState.isLoading) {
+    return(
+      <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
+
+  
   return (
-    <View>
-      <Text>
-        L I G H T S P E E D
-      </Text>
-    </View>
-  )
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        {loginState.userToken !== null ? (
+        <Stack.Navigator initialRouteName="Home" headerMode="none">
+          <Stack.Screen name="Home" component={HomeScreen}/>
+          <Stack.Screen name="MyCharacters" component={MyCharacters} />
+          <Stack.Screen name="CreateCharacter" component={CreateCharacter} />
+          <Stack.Screen name="Details" component={DetailsScreen} />
+
+        </Stack.Navigator>
+        ) : (
+        <Stack.Navigator initialRouteName="LogIn">
+          <Stack.Screen name="Foyer" component={FoyerScreen} />
+          <Stack.Screen name="LogIn" component={LogInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+        </Stack.Navigator>
+        )}
+        
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
 }
+
+export default App;
+
