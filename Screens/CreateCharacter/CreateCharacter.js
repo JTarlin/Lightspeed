@@ -1,16 +1,22 @@
 import * as React from 'react';
-import { Button, View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, Modal, TouchableHighlight, TouchableOpacity} from 'react-native';
 import CustomHeader from "../../Components/CustomHeader";
 import {Picker} from '@react-native-picker/picker';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import ImageDisplay from "../../Components/ImageDisplay";
 
 function CreateCharacter(props) {
 
     const navigation = props.navigation;
 
+    //keeps track of our important character info, written to database when submit is pressed
     const [characterObj, setCharacterObj] = React.useState({race: "", subrace: ""});
 
+    //tracks whether the appearance modal is open or not
+    const [modalVisible, setModalVisible] = React.useState(false);
+
     function setSubrace(race) {
-        console.log(race);
         switch(race) {
             case "human":
                 return <Picker
@@ -31,14 +37,49 @@ function CreateCharacter(props) {
                 </Picker>
                 break
             default:
+                return <Picker
+                selectedValue={characterObj.subrace}
+                style={styles.selector}
+                onValueChange={(itemValue) => {setCharacterObj({...characterObj, subrace: itemValue})}}>
+                <Picker.Item label="Select Species First!" value="" />
+                </Picker>
                 break
         }
+    }
+
+    function toggleModal() {
+        setModalVisible(!modalVisible);
     }
 
     return (
         <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column" }}>
             <CustomHeader title={"C R E A T E  C H A R A C T E R"} goBack={()=>{navigation.goBack()}}/>
             
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={modalVisible}
+                onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <CustomHeader title={"A P P E A R A N C E"} goBack={toggleModal}/>
+                    <Text style={styles.modalText}>Hello World!</Text>
+                    
+                    <TouchableHighlight
+                        style={{backgroundColor: "#2196F3" }}
+                        onPress={() => {
+                            setModalVisible(false);
+                        }}
+                        >
+                        <Text >Hide Modal</Text>
+                    </TouchableHighlight>
+
+                    <ImageDisplay subrace={characterObj.subrace} />
+                </View>
+            </Modal>
+
             <View style={{flex: 1, alignItems: "center"}}>
                 <Text>Choose Species</Text>
                 <Picker
@@ -50,6 +91,11 @@ function CreateCharacter(props) {
                 </Picker>
                 <Text>Choose Subspecies</Text>
                 {setSubrace(characterObj.race)}
+                <Text>Choose Appearance</Text>
+                <TouchableOpacity onPress={toggleModal}>
+                    <View style={{borderRadius: 50, border: "3px solid black", height: 100, width: 100, backgroundColor: "gray"}}></View>
+                </TouchableOpacity>
+
             </View>
         </View>
     );
@@ -59,7 +105,7 @@ function CreateCharacter(props) {
 const styles = StyleSheet.create({
     selector: {
         height: 60, 
-        width: 200
+        width: 300
     }
 })
 
