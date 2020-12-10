@@ -26,11 +26,11 @@ export default function ImageDisplay({subrace, setImage, toggleModal}) {
 
     return (
 
-        <View style={{flex: 1, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around", marginTop: 30}}>
+        <View style={{flex: 1, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-around"}}>
             {imagePaths.map(image=>{
                 return (
-                <TouchableOpacity onPress={()=>{setImage(image.image); toggleModal();}}>
-                    <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} key={image.id} source={image.image} />
+                <TouchableOpacity key={image.key} onPress={()=>{setImage(image.image); toggleModal();}}>
+                    <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black", marginTop: 30}} key={image.id} source={image.image} />
                 </TouchableOpacity>)
             })}
         </View>

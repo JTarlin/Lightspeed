@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {AuthContext} from "./Components/context";
+import {AuthContext, UserTokenContext} from "./Components/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Buffer } from 'buffer';
 import uuid from 'react-native-uuid';
@@ -96,7 +96,6 @@ function App() {
       //we only set token if username/password combo is unique and valid
       db.ref('usernames/'+username).once("value", function(snapshot) {
         if(snapshot.exists()) {
-          console.log("username taken: user not added");
           register = false;
         } else {
           let userToken;
@@ -108,7 +107,6 @@ function App() {
             password: password,
             email: email,
           });
-          console.log("user added")
 
           //then add that user's username to the username list
           db.ref('usernames/'+username).set({
@@ -117,7 +115,7 @@ function App() {
 
           dispatch({type: "REGISTER", id: username, token: userToken})
         }
-    });
+      });
     }
   }), []);
 
@@ -128,11 +126,17 @@ function App() {
       userToken = null;
       try{
         userToken = await AsyncStorage.getItem("userToken")
+        if(userToken) {
+          //we have data
+          console.log(userToken);
+          dispatch({type: "RETRIEVE_TOKEN", token: userToken});
+        } else {
+          console.log("no user token found in async");
+          dispatch({type: "LOGOUT"})
+        }
       } catch(e) {
-        console.log(e);
+        console.log("user token retrieve error: "+e);
       }
-      dispatch({type: "RETRIEVE_TOKEN", token: "xumbu"})
-
     }, 1000)
   }, []);
 
@@ -147,24 +151,27 @@ function App() {
   
   return (
     <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {loginState.userToken !== null ? (
-        <Stack.Navigator initialRouteName="Home" headerMode="none">
-          <Stack.Screen name="Home" component={HomeScreen}/>
-          <Stack.Screen name="MyCharacters" component={MyCharacters} />
-          <Stack.Screen name="CreateCharacter" component={CreateCharacter} />
-          <Stack.Screen name="Details" component={DetailsScreen} />
+      <UserTokenContext.Provider value={loginState.userToken}>
+        {console.log("current user token: "+loginState.userToken)}
+        <NavigationContainer>
+          {loginState.userToken !== null ? (
+          <Stack.Navigator initialRouteName="Home" headerMode="none">
+            <Stack.Screen name="Home" component={HomeScreen}/>
+            <Stack.Screen name="MyCharacters" component={MyCharacters} />
+            <Stack.Screen name="CreateCharacter" component={CreateCharacter} />
+            <Stack.Screen name="Details" component={DetailsScreen} />
 
-        </Stack.Navigator>
-        ) : (
-        <Stack.Navigator initialRouteName="LogIn">
-          <Stack.Screen name="Foyer" component={FoyerScreen} />
-          <Stack.Screen name="LogIn" component={LogInScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-        </Stack.Navigator>
-        )}
-        
-      </NavigationContainer>
+          </Stack.Navigator>
+          ) : (
+          <Stack.Navigator initialRouteName="LogIn">
+            <Stack.Screen name="Foyer" component={FoyerScreen} />
+            <Stack.Screen name="LogIn" component={LogInScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+          </Stack.Navigator>
+          )}
+          
+        </NavigationContainer>
+      </UserTokenContext.Provider>
     </AuthContext.Provider>
   );
 }
