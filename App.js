@@ -102,9 +102,10 @@ function App() {
           userToken=uuid.v1();
 
           //add the basic user data to the users list
-          db.ref('users/' + userToken).set({
+          db.ref('users/' + username).set({
             username: username,
             password: password,
+            userToken: userToken,
             email: email,
           });
 

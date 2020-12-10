@@ -112,7 +112,7 @@ function CreateCharacter(props) {
             console.log("Publishing!");
             const characterId=uuid.v1();
 
-            db.ref('allCharacters/' + userToken + "/characters/"+characterId).set({
+            db.ref('allCharacters/' + userToken + "/"+characterId).set({
                 race: characterObj.race,
                 subrace: characterObj.subrace,
                 image: characterObj.image,
