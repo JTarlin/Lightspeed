@@ -70,18 +70,27 @@ function App() {
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState)
 
   const authContext = React.useMemo(()=>({
-    signIn: async(userName, password)=>{
+    signIn: (userName, password)=>{
       let userToken;
       userToken = null;
-      if(userName==="user" && password==="password") {
-        userToken="gfgffg";
-        try{
-          await AsyncStorage.setItem("userToken", userToken)
-        } catch(e) {
-          console.log(e);
+
+      db.ref('users/'+userName).once("value", function(snapshot) {
+        if(snapshot.exists()) {
+          //this one is a real user
+          //check password
+          if(snapshot.val().password===password) {
+            //wow they even have the right password!
+            userToken=snapshot.val().userToken;
+            asyncStoreLogin(userToken);
+            dispatch({type: "LOGIN", id: userName, token: userToken})
+          } else {
+            console.log("wrong username or password");
+          }
+        } else {
+          console.log("wrong username or password");
         }
-      }
-      dispatch({type: "LOGIN", id: userName, token: userToken})
+      });
+      
     },
     signOut: async()=>{
       try{
@@ -96,7 +105,7 @@ function App() {
       //we only set token if username/password combo is unique and valid
       db.ref('usernames/'+username).once("value", function(snapshot) {
         if(snapshot.exists()) {
-          register = false;
+          register = false; //because we can't have two users with the same username
         } else {
           let userToken;
           userToken=uuid.v1();
@@ -120,6 +129,16 @@ function App() {
     }
   }), []);
 
+  const asyncStoreLogin = async(userToken)=>{
+    if(userToken){
+      try{
+        await AsyncStorage.setItem("userToken", userToken)
+      } catch(e) {
+        console.log(e);
+      }
+    }
+  }
+
   //on component lifecycle, retrieve token from async local storage
   React.useEffect(()=>{
     setTimeout(async()=>{
@@ -129,10 +148,8 @@ function App() {
         userToken = await AsyncStorage.getItem("userToken")
         if(userToken) {
           //we have data
-          console.log(userToken);
           dispatch({type: "RETRIEVE_TOKEN", token: userToken});
         } else {
-          console.log("no user token found in async");
           dispatch({type: "LOGOUT"})
         }
       } catch(e) {
@@ -153,7 +170,6 @@ function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <UserTokenContext.Provider value={loginState.userToken}>
-        {console.log("current user token: "+loginState.userToken)}
         <NavigationContainer>
           {loginState.userToken !== null ? (
           <Stack.Navigator initialRouteName="Home" headerMode="none">

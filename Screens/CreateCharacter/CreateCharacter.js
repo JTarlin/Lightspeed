@@ -100,17 +100,10 @@ function CreateCharacter(props) {
     //get the current signed-in user's token from appropriate context
     const userToken = React.useContext(UserTokenContext);
 
-    console.log("base level of create characters context:"+userToken)
-
     function publishCharacter() {
         //add this character's state data to the database, only if all fields are completed (no null in state)
-
-        
-        console.log("user token is: "+userToken);
-
         if(characterObj.destiny && characterObj.image && characterObj.subrace && characterObj.race){
-            console.log("Publishing!");
-            const characterId=uuid.v1();
+            const characterId=uuid.v1(); //set character id (characters CAN have duplicate names)
 
             db.ref('allCharacters/' + userToken + "/"+characterId).set({
                 race: characterObj.race,
