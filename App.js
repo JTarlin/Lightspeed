@@ -15,6 +15,9 @@ import HomeScreen from "./Screens/Home/Home";
 import DetailsScreen from "./Screens/Details/Details";
 import MyCharacters from "./Screens/MyCharacters/MyCharacters";
 import CreateCharacter from "./Screens/CreateCharacter/CreateCharacter";
+import MyCampaigns from "./Screens/MyCampaigns/MyCampaigns";
+import CreateCampaign from "./Screens/CreateCampaign/CreateCampaign";
+import CharacterSheet from "./Screens/CharacterSheet/CharacterSheet";
 //if user is signed out
 import FoyerScreen from "./Screens/Foyer/Foyer";
 import LogInScreen from "./Screens/LogIn/LogIn";
@@ -176,7 +179,10 @@ function App() {
             <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen name="MyCharacters" component={MyCharacters} />
             <Stack.Screen name="CreateCharacter" component={CreateCharacter} />
+            <Stack.Screen name="MyCampaigns" component={MyCampaigns} />
+            <Stack.Screen name="CreateCampaign" component={CreateCampaign} />
             <Stack.Screen name="Details" component={DetailsScreen} />
+            <Stack.Screen name="CharacterSheet" component={CharacterSheet} />
 
           </Stack.Navigator>
           ) : (
