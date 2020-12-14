@@ -10,7 +10,7 @@ import {db} from '../src/config';
 
 // const drawnPath = "../assets/images/drawn/";
 
-export default function CharacterDisplay({setImage, toggleModal}) {
+export default function CharacterDisplay({addCharacter, selectedChars}) {
 
     //get the current signed-in user's token from appropriate context
     const userToken = React.useContext(UserTokenContext);
@@ -31,6 +31,6 @@ export default function CharacterDisplay({setImage, toggleModal}) {
     }
     
     return (
-        <CharacterList characters={characters} />
+        <CharacterList characters={characters} addFunction={addCharacter} selectedChars={selectedChars}/>
     )
 }

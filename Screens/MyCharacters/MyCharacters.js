@@ -40,7 +40,7 @@ function MyCharacters({ navigation }) {
             title="Create New Character"
             onPress={() => navigation.push('CreateCharacter')}
           />
-        <CharacterList characters={characters} />
+        <CharacterList characters={characters} addFunction={null} selectedChars={[]}/>
       </View>
     );
 }

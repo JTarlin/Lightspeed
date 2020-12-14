@@ -16,41 +16,67 @@ function CreateCampaign(props) {
     const navigation = props.navigation;
 
     //keeps track of our important campaign info, written to database when submit is pressed
-    const [campaignObj, setCampaignObj] = React.useState({image: null, name: null, characters: null});
+    const [campaignObj, setCampaignObj] = React.useState({image: null, name: null, characters: []});
 
     //tracks whether the appearance modal is open or not
     const [modalThumbVisible, setModalThumbVisible] = React.useState(false);
     //tracks whether the characters modal is open or not
     const [modalCharsVisible, setModalCharsVisible] = React.useState(false);
+    //load characters on initial component render
+    React.useEffect(() => {
+        const closemodals = navigation.addListener('blur', () => {
+            setModalCharsVisible(false);
+        });
+        return closemodals;
+    }, [navigation]); //runs on mount and whenever navigation changes
 
     function toggleThumbModal() {
         setModalThumbVisible(!modalThumbVisible);
     }
 
-    function toggleCharsModal() {
-        setModalCharsVisible(!modalCharsVisible);
+    //this function opens the page to add new characters
+    function addCharacters() {
+        navigation.push("CharacterSelect", {addCharacter: setCampaignCharacter, selectedChars: campaignObj.characters});
     }
 
+    //this function is passed down as props, and is called when we want to set a new character into out campaign
+    function setCampaignCharacter(char) {
+        let newChars = campaignObj.characters;
+        newChars.push(char);
+        console.log("the current characters array is: "+newChars);
+        setCampaignObj({...campaignObj, characters: newChars});
+
+    }
+
+    //changes the campaign thumbnail image when called
     function setCampaignImage(img) {
         setCampaignObj({...campaignObj, image: img});
     }
 
+    //render the characters in this campaign to the screen
+    function renderChars(chars){
+        return chars.map(char => {
+            return (
+                <TouchableOpacity onPress={()=>{navigation.push("CharacterSheet", {character: char})}} key={char.id}>
+                    <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={char.image} />
+                </TouchableOpacity>
+            )
+        })
+        
+    }
+
     //get the current signed-in user's token from appropriate context
     const userToken = React.useContext(UserTokenContext);
-
     function publishCampaign() {
         //add this Campaign's state data to the database, only if all fields are completed (no null in state)
-        if(campaignObj.image && campaignObj.name){
+        if(campaignObj.image && campaignObj.name && campaignObj.characters.length>0){
             const campaignId=uuid.v1(); //set campaign id (campaigns CAN have duplicate names)
 
             db.ref('allCampaigns/' + userToken + "/"+campaignId).set({
-                race: campaignObj.race,
-                subrace: campaignObj.subrace,
                 image: campaignObj.image,
-                classType: campaignObj.classType,
                 id: campaignId,
                 name: campaignObj.name,
-                rank: 0,
+                characters: campaignObj.characters,
             });
 
             //if we've successfully published a new char, go to view chars
@@ -77,21 +103,6 @@ function CreateCampaign(props) {
                 </View>
             </Modal>
 
-            {/* modal for the character picker  */}
-            <Modal
-                animationType="slide"
-                transparent={false}
-                visible={modalCharsVisible}
-                onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
-                }}
-            >
-                <View style={{flex:1}}>
-                    <CustomHeader title={"C H A R A C T E R S"} goBack={toggleCharsModal}/>
-                    <CharacterDisplay setImage={setCampaignImage} toggleModal={toggleCharsModal} />
-                </View>
-            </Modal>
-
             <View style={{flex: 1, alignItems: "center"}}>
                 <Text>Enter Campaign Name</Text>
                 <TextInput
@@ -107,9 +118,10 @@ function CreateCampaign(props) {
                 <Text>Add Characters to Campaign</Text>
                 <View style={{height: 110, width: "100%"}}>
                     <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", backgroundColor: "#98b8eb"}}>
-                        <TouchableOpacity onPress={toggleCharsModal}>
-                            <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={campaignObj.image} />
+                        <TouchableOpacity onPress={addCharacters}>
+                            <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={null} />
                         </TouchableOpacity>
+                        {renderChars(campaignObj.characters)}
                     </ScrollView>
                 </View>
                 
