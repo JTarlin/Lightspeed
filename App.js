@@ -20,6 +20,7 @@ import CreateCampaign from "./Screens/CreateCampaign/CreateCampaign";
 import CharacterSelect from "./Screens/CharacterSelect/CharacterSelect";
 import CharacterSheet from "./Screens/CharacterSheet/CharacterSheet";
 import CampaignScreen from "./Screens/CampaignScreen/CampaignScreen";
+import OnlineScreen from "./Screens/OnlineScreen/OnlineScreen";
 //if user is signed out
 import FoyerScreen from "./Screens/Foyer/Foyer";
 import LogInScreen from "./Screens/LogIn/LogIn";
@@ -187,6 +188,7 @@ function App() {
             <Stack.Screen name="CharacterSelect" component={CharacterSelect} />
             <Stack.Screen name="CharacterSheet" component={CharacterSheet} />
             <Stack.Screen name="CampaignScreen" component={CampaignScreen} />
+            <Stack.Screen name="OnlineScreen" component={OnlineScreen} />
           </Stack.Navigator>
           ) : (
           <Stack.Navigator initialRouteName="LogIn">
