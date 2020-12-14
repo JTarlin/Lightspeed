@@ -11,7 +11,7 @@ export default function OnlineScreen({navigation}){
     return (
         <View style={{flex:1}}>
             <CustomHeader title={"O N L I N E"} goBack={()=>{navigation.goBack()}}/>
-            <TouchableOpacity onPress={()=>{console.log("pressed crete nrw game")}}>
+            <TouchableOpacity onPress={()=>{navigation.push("CreateGame")}}>
                 <View style={{height: 60, width: "100%", backgroundColor: "#98b8eb"}}>
                     <Text>CREATE NEW GAME</Text>
                 </View>

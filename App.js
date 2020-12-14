@@ -21,7 +21,7 @@ import CharacterSelect from "./Screens/CharacterSelect/CharacterSelect";
 import CharacterSheet from "./Screens/CharacterSheet/CharacterSheet";
 import CampaignScreen from "./Screens/CampaignScreen/CampaignScreen";
 import OnlineScreen from "./Screens/OnlineScreen/OnlineScreen";
-import CreateGame from "./Screens/OnlineScreen/OnlineScreen";
+import CreateGame from "./Screens/CreateGame/CreateGame";
 //if user is signed out
 import FoyerScreen from "./Screens/Foyer/Foyer";
 import LogInScreen from "./Screens/LogIn/LogIn";
