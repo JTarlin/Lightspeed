@@ -7,16 +7,12 @@ export default function CharacterSheet ({navigation, ...props}){
 
     const {character} = props.route.params;
 
-    console.log("character"+character);
-
     return (
         <View style={{flex:1}}>
             <CustomHeader title={character.name} goBack={()=>{navigation.goBack()}}/>
             <ScrollView style={{flex: 1,}} contentContainerStyle={{alignItems: "center"}}>
                 <Image source={character.image} style={styles.mainImage}/>
                 <Text style={styles.name} >{character.name}</Text>
-
-
             </ScrollView>
         </View>
     )
