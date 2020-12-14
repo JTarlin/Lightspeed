@@ -19,8 +19,8 @@ function HomeScreen({ navigation }) {
               style={{flex:1}}
             />
             <Button
-              title="Go to Details"
-              onPress={() => navigation.navigate('Details')}
+              title="My Campaigns"
+              onPress={() => navigation.navigate('MyCampaigns')}
               style={{flex:1}}
             />
           </View>

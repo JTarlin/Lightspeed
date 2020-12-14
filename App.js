@@ -15,6 +15,10 @@ import HomeScreen from "./Screens/Home/Home";
 import DetailsScreen from "./Screens/Details/Details";
 import MyCharacters from "./Screens/MyCharacters/MyCharacters";
 import CreateCharacter from "./Screens/CreateCharacter/CreateCharacter";
+import MyCampaigns from "./Screens/MyCampaigns/MyCampaigns";
+import CreateCampaign from "./Screens/CreateCampaign/CreateCampaign";
+import CharacterSelect from "./Screens/CharacterSelect/CharacterSelect";
+import CharacterSheet from "./Screens/CharacterSheet/CharacterSheet";
 //if user is signed out
 import FoyerScreen from "./Screens/Foyer/Foyer";
 import LogInScreen from "./Screens/LogIn/LogIn";
@@ -70,18 +74,27 @@ function App() {
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState)
 
   const authContext = React.useMemo(()=>({
-    signIn: async(userName, password)=>{
+    signIn: (userName, password)=>{
       let userToken;
       userToken = null;
-      if(userName==="user" && password==="password") {
-        userToken="gfgffg";
-        try{
-          await AsyncStorage.setItem("userToken", userToken)
-        } catch(e) {
-          console.log(e);
+
+      db.ref('users/'+userName).once("value", function(snapshot) {
+        if(snapshot.exists()) {
+          //this one is a real user
+          //check password
+          if(snapshot.val().password===password) {
+            //wow they even have the right password!
+            userToken=snapshot.val().userToken;
+            asyncStoreLogin(userToken);
+            dispatch({type: "LOGIN", id: userName, token: userToken})
+          } else {
+            console.log("wrong username or password");
+          }
+        } else {
+          console.log("wrong username or password");
         }
-      }
-      dispatch({type: "LOGIN", id: userName, token: userToken})
+      });
+      
     },
     signOut: async()=>{
       try{
@@ -96,15 +109,16 @@ function App() {
       //we only set token if username/password combo is unique and valid
       db.ref('usernames/'+username).once("value", function(snapshot) {
         if(snapshot.exists()) {
-          register = false;
+          register = false; //because we can't have two users with the same username
         } else {
           let userToken;
           userToken=uuid.v1();
 
           //add the basic user data to the users list
-          db.ref('users/' + userToken).set({
+          db.ref('users/' + username).set({
             username: username,
             password: password,
+            userToken: userToken,
             email: email,
           });
 
@@ -119,6 +133,16 @@ function App() {
     }
   }), []);
 
+  const asyncStoreLogin = async(userToken)=>{
+    if(userToken){
+      try{
+        await AsyncStorage.setItem("userToken", userToken)
+      } catch(e) {
+        console.log(e);
+      }
+    }
+  }
+
   //on component lifecycle, retrieve token from async local storage
   React.useEffect(()=>{
     setTimeout(async()=>{
@@ -128,10 +152,8 @@ function App() {
         userToken = await AsyncStorage.getItem("userToken")
         if(userToken) {
           //we have data
-          console.log(userToken);
           dispatch({type: "RETRIEVE_TOKEN", token: userToken});
         } else {
-          console.log("no user token found in async");
           dispatch({type: "LOGOUT"})
         }
       } catch(e) {
@@ -152,14 +174,17 @@ function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <UserTokenContext.Provider value={loginState.userToken}>
-        {console.log("current user token: "+loginState.userToken)}
         <NavigationContainer>
           {loginState.userToken !== null ? (
           <Stack.Navigator initialRouteName="Home" headerMode="none">
             <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen name="MyCharacters" component={MyCharacters} />
             <Stack.Screen name="CreateCharacter" component={CreateCharacter} />
+            <Stack.Screen name="MyCampaigns" component={MyCampaigns} />
+            <Stack.Screen name="CreateCampaign" component={CreateCampaign} />
             <Stack.Screen name="Details" component={DetailsScreen} />
+            <Stack.Screen name="CharacterSelect" component={CharacterSelect} />
+            <Stack.Screen name="CharacterSheet" component={CharacterSheet} />
 
           </Stack.Navigator>
           ) : (

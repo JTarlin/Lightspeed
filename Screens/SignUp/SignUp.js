@@ -41,11 +41,11 @@ function SignUpScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   input: {
-    fontSize: 20,
+    fontSize: 16,
     borderColor: "black",
     borderWidth: 1,
     width: 150,
-    height: 30,
+    height: 40,
     marginBottom: 10,
   }
 })

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
 
 import {AuthContext} from "../../Components/context";
-import StyledInput from "../../Components/StyledInput";
 
 function LogInScreen({ navigation }) {
 
@@ -37,11 +36,12 @@ function LogInScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   input: {
-    fontSize: 20,
+    fontSize: 16,
     borderColor: "black",
     borderWidth: 1,
     width: 150,
-    height: 30,
+    height: 40,
+    marginBottom: 10,
   }
 })
 

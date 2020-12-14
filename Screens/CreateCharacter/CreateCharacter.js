@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import uuid from 'react-native-uuid';
 
@@ -16,7 +16,7 @@ function CreateCharacter(props) {
     const navigation = props.navigation;
 
     //keeps track of our important character info, written to database when submit is pressed
-    const [characterObj, setCharacterObj] = React.useState({race: null, subrace: null, image: null, destiny: null});
+    const [characterObj, setCharacterObj] = React.useState({race: null, subrace: null, image: null, classType: null, name: null});
 
     //tracks whether the appearance modal is open or not
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -61,38 +61,38 @@ function CreateCharacter(props) {
         setCharacterObj({...characterObj, image: img});
     }
 
-    //set the destiny description based on the chosen option
-    function setDestiny(destiny) {
-        switch(destiny) {
-            case "commerce":
+    //set the classType description based on the chosen option
+    function setClassType(classType) {
+        switch(classType) {
+            case "heavy":
                 return (
                     <Text>
-                        Money is power, and your accounts keep growing. You have something valuable to offer to the people of the galaxy, and they have the money to pay for it. Success is only a matter of time for you.
+                        As a heavy, your name means strength. You could be an honourable marine, a ruthless pirate, or anything in between, but you win fights all the same. It may be the others who do the charming, but when things go south, you’re the one who everyone turns to.
                     </Text>)
-            case "crime":
+            case "hunter":
                 return (
                     <Text>
-                        In such a vast galaxy, it’s amazing that people still want to tell you what you can and can’t do. By their terms, you would be considered a criminal; too dangerous or destructive to be free. Their mistake, because now they’re your enemy.
+                        It’s easy for things to go missing in such an immense galaxy - people too. Hunters are the ones who make sure that doesn’t happen, no matter how hidden their quarry may be. Finding your target in the endless sprawl of space isn’t an easy job, but you get it done either way.
                     </Text>)
-            case "justice":
+            case "pilot":
                 return (
                     <Text>
-                        People are capable of despicable things when no one enforces consequences. Society can bring utopia to the stars, but not when it is plagued with chaos. You have devoted yourself to the pursuit of justice, whether you define it or enforce it.
+                        An engine is just a hunk of metal. When you get behind the controls though, it becomes a living thing, and it answers to you. As a pilot, you do the real heavy lifting for your crew, whether they admit it or not.
                     </Text>)
-            case "paranormal":
+            case "tech":
                 return (
                     <Text>
-                        In an age of space exploration, the underlying spirit of the universe can go unnoticed. Your mind is attuned to the great cosmic powers beyond science, and you have witnessed the inexplicable secrets of the universe.
+                        It isn’t magic that keeps society ticking. It’s all wired up, and you’re the one doing the wiring. As a tech, you are an architect of the future, which is just about here. You could be a warship’s engineer, an undercover hacker, or a scrapyard scavenger.
                     </Text>)
-            case "technology":
+            case "trader":
                 return (
                     <Text>
-                        There would be no interstellar society without the wonders of modern technology. It is your mission to uphold and progress understanding of what tools can accomplish. You are a master of technology, whether you develop it or if it is a part of you.
+                        A lot goes into the crew of a ship, but they probably wouldn’t be there if it weren’t for you. Traders are the ones paying the wages, whether you’re a dealer in exotic xeno beasts or illegal gun parts. The others may do the fighting, but you decide who’s getting shot. 
                     </Text>)
             default:
                 return (
                     <Text>
-                        There are unlimited ways to solve a problem. What’s often more important is why the problem is being solved. Your motivations may be diverse and complex, but you can always find common ground with likeminded people. The path that you are drawn to may not be inevitable, but in many ways, it is your destiny.
+                        Your class represents the work you do to make a name for yourself; it determines the abilities you’ve learned and the equipment that you use. Whether you’re a ship’s genius engineer or a renegade bounty hunter, your talents are indispensable.
                     </Text>)
         }
     }
@@ -100,31 +100,30 @@ function CreateCharacter(props) {
     //get the current signed-in user's token from appropriate context
     const userToken = React.useContext(UserTokenContext);
 
-    console.log("base level of create characters context:"+userToken)
-
     function publishCharacter() {
         //add this character's state data to the database, only if all fields are completed (no null in state)
+        if(characterObj.classType && characterObj.image && characterObj.subrace && characterObj.race && characterObj.name){
+            const characterId=uuid.v1(); //set character id (characters CAN have duplicate names)
 
-        
-        console.log("user token is: "+userToken);
-
-        if(characterObj.destiny && characterObj.image && characterObj.subrace && characterObj.race){
-            console.log("Publishing!");
-            const characterId=uuid.v1();
-
-            db.ref('allCharacters/' + userToken + "/characters/"+characterId).set({
+            db.ref('allCharacters/' + userToken + "/"+characterId).set({
                 race: characterObj.race,
                 subrace: characterObj.subrace,
                 image: characterObj.image,
-                destiny: characterObj.destiny,
+                classType: characterObj.classType,
+                id: characterId,
+                name: characterObj.name,
+                rank: 0,
             });
+
+            //if we've successfully published a new char, go to view chars
+            navigation.navigate("MyCharacters");
         }
     }
 
     return (
         <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column" }}>
             <CustomHeader title={"C R E A T E  C H A R A C T E R"} goBack={()=>{navigation.goBack()}}/>
-            
+                
             <Modal
                 animationType="slide"
                 transparent={false}
@@ -135,41 +134,46 @@ function CreateCharacter(props) {
             >
                 <View >
                     <CustomHeader title={"A P P E A R A N C E"} goBack={toggleModal}/>
-                    <ImageDisplay subrace={characterObj.subrace} setImage={setCharacterImage} toggleModal={toggleModal} />
+                    <ImageDisplay imagetype={characterObj.subrace} setImage={setCharacterImage} toggleModal={toggleModal} />
                 </View>
             </Modal>
-
-            <View style={{flex: 1, alignItems: "center"}}>
-                <Text>Choose Race</Text>
-                <Picker
-                    selectedValue={characterObj.race}
-                    style={styles.selector}
-                    onValueChange={(itemValue) => {setCharacterObj({...characterObj, race: itemValue, subrace: null, image: null});}}>
-                    <Picker.Item label="Choose Race" value={null} />
-                    <Picker.Item label="Human" value="human" />
-                    <Picker.Item label="Robot" value="robot" />
-                </Picker>
-                <Text>Choose Subrace</Text>
-                {setSubrace(characterObj.race)}
-                <Text>Choose Appearance</Text>
-                <TouchableOpacity onPress={toggleModal}>
-                    <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={characterObj.image} />
-                </TouchableOpacity>
-                <Text>Choose Destiny</Text>
-                <Picker
-                    selectedValue={characterObj.destiny}
-                    style={styles.selector}
-                    onValueChange={(itemValue) => {setCharacterObj({...characterObj, destiny: itemValue})}}>
-                    <Picker.Item label="Choose Destiny" value={null} />
-                    <Picker.Item label="Commerce" value="commerce" />
-                    <Picker.Item label="Crime" value="crime" />
-                    <Picker.Item label="Justice" value="justice" />
-                    <Picker.Item label="Paranormal" value="paranormal" />
-                    <Picker.Item label="Technology" value="technology" />
-                </Picker>
-                {setDestiny(characterObj.destiny)}
-                <Button onPress={publishCharacter} title="C R E A T E"/>
-            </View>
+                <View style={{flex: 1, alignItems: "center"}}>
+                    <Text>Choose Race</Text>
+                    <Picker
+                        selectedValue={characterObj.race}
+                        style={styles.selector}
+                        onValueChange={(itemValue) => {setCharacterObj({...characterObj, race: itemValue, subrace: null, image: null});}}>
+                        <Picker.Item label="Choose Race" value={null} />
+                        <Picker.Item label="Human" value="human" />
+                        <Picker.Item label="Robot" value="robot" />
+                    </Picker>
+                    <Text>Choose Subrace</Text>
+                    {setSubrace(characterObj.race)}
+                    <Text>Enter Name</Text>
+                    <TextInput
+                        onChangeText={text => setCharacterObj({...characterObj, name: text})}
+                        value={characterObj.name}
+                        style={styles.input}
+                    />
+                    <Text>Choose Appearance</Text>
+                    <TouchableOpacity onPress={toggleModal}>
+                        <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={characterObj.image} />
+                    </TouchableOpacity>
+                    <Text>Choose Class</Text>
+                    <Picker
+                        selectedValue={characterObj.classType}
+                        style={styles.selector}
+                        onValueChange={(itemValue) => {setCharacterObj({...characterObj, classType: itemValue})}}>
+                        <Picker.Item label="Choose Class" value={null} />
+                        <Picker.Item label="Heavy" value="heavy" />
+                        <Picker.Item label="Hunter" value="hunter" />
+                        <Picker.Item label="Pilot" value="pilot" />
+                        <Picker.Item label="Tech" value="tech" />
+                        <Picker.Item label="Trader" value="trader" />
+                    </Picker>
+                    {setClassType(characterObj.classType)}
+                    <Button onPress={publishCharacter} title="C R E A T E"/>
+                </View>
         </View>
     );
 
@@ -179,7 +183,15 @@ const styles = StyleSheet.create({
     selector: {
         height: 60, 
         width: 300
-    }
+    },
+    input: {
+        fontSize: 16,
+        borderColor: "black",
+        borderWidth: 1,
+        width: 150,
+        height: 40,
+        marginBottom: 10,
+      }
 })
 
 export default CreateCharacter;
