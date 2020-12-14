@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, ScrollView, Image, Text, StyleSheet} from 'react-native';
+import { Button, View, ScrollView, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";
@@ -42,15 +42,17 @@ function MyCampaigns({ navigation }) {
         <ScrollView style={{flex: 1}}>
           {campaigns && campaigns.map(campaign=>{
             return (
-            <View key={campaign.id} style={{height: 100, width: "100%"}}>
-              <View key={campaign.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
-                <Image
-                  source={campaign.image}
-                  style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginTop: 30}}
-                  key={campaign.id}/>
-                <Text style={{fontSize: 20, marginLeft: 40}}>{campaign.name}</Text>
+            <TouchableOpacity onPress={()=>{navigation.push("CampaignScreen", {campaign: campaign})}}>
+              <View key={campaign.id} style={{height: 100, width: "100%"}}>
+                <View key={campaign.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
+                  <Image
+                    source={campaign.image}
+                    style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginTop: 30}}
+                    key={campaign.id}/>
+                  <Text style={{fontSize: 20, marginLeft: 40}}>{campaign.name}</Text>
+                </View>
               </View>
-            </View>)
+            </TouchableOpacity>)
           })}
         </ScrollView>
       </View>
