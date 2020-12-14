@@ -6,7 +6,7 @@ import TitleText from "../../Components/TitleText";
 
 function HomeScreen({ navigation }) {
 
-    const {signOut} = React.useContext(AuthContext);
+  const {signOut} = React.useContext(AuthContext);
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
