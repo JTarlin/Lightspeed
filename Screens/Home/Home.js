@@ -15,19 +15,19 @@ function HomeScreen({ navigation }) {
           <View style={{flex:1, flexDirection: "row"}}>
             <Button
               title="My Characters"
-              onPress={() => navigation.navigate('MyCharacters')}
+              onPress={() => navigation.push('MyCharacters')}
               style={{flex:1}}
             />
             <Button
               title="My Campaigns"
-              onPress={() => navigation.navigate('MyCampaigns')}
+              onPress={() => navigation.push('MyCampaigns')}
               style={{flex:1}}
             />
           </View>
           <View style={{flex:1, flexDirection: "row"}}>
             <Button
-              title="Go to Details"
-              onPress={() => navigation.navigate('Details')}
+              title="Online"
+              onPress={() => navigation.push('OnlineScreen')}
               style={{flex:1}}
             />
             <Button
