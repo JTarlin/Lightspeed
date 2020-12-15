@@ -8,11 +8,11 @@ function FoyerScreen({ navigation }) {
         <Text>Foyer Screen</Text>
         <Button
           title="Log In To Your Account"
-          onPress={() => navigation.push('LogIn')}
+          onPress={() => {navigation.push('LogIn')}}
         />
         <Button
             title="Sign Up For a New Account"
-            onPress={() => navigation.push('SignUp')}
+            onPress={() => {navigation.push('SignUp')}}
         />
       </View>
     );

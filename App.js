@@ -148,7 +148,7 @@ function App() {
 
   //on component lifecycle, retrieve token from async local storage
   React.useEffect(()=>{
-    setTimeout(async()=>{
+    async()=>{
       let userToken;
       userToken = null;
       try{
@@ -162,7 +162,7 @@ function App() {
       } catch(e) {
         console.log("user token retrieve error: "+e);
       }
-    }, 1000)
+    }
   }, []);
 
   if(loginState.isLoading) {
@@ -193,7 +193,7 @@ function App() {
             <Stack.Screen name="CreateGame" component={CreateGame} />
           </Stack.Navigator>
           ) : (
-          <Stack.Navigator initialRouteName="LogIn">
+          <Stack.Navigator initialRouteName="Foyer">
             <Stack.Screen name="Foyer" component={FoyerScreen} />
             <Stack.Screen name="LogIn" component={LogInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
