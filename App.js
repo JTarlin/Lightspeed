@@ -21,6 +21,7 @@ import CharacterSelect from "./Screens/CharacterSelect/CharacterSelect";
 import CharacterSheet from "./Screens/CharacterSheet/CharacterSheet";
 import CampaignScreen from "./Screens/CampaignScreen/CampaignScreen";
 import OnlineScreen from "./Screens/OnlineScreen/OnlineScreen";
+import CreateGame from "./Screens/CreateGame/CreateGame";
 //if user is signed out
 import FoyerScreen from "./Screens/Foyer/Foyer";
 import LogInScreen from "./Screens/LogIn/LogIn";
@@ -147,7 +148,7 @@ function App() {
 
   //on component lifecycle, retrieve token from async local storage
   React.useEffect(()=>{
-    setTimeout(async()=>{
+    async()=>{
       let userToken;
       userToken = null;
       try{
@@ -161,7 +162,7 @@ function App() {
       } catch(e) {
         console.log("user token retrieve error: "+e);
       }
-    }, 1000)
+    }
   }, []);
 
   if(loginState.isLoading) {
@@ -189,9 +190,10 @@ function App() {
             <Stack.Screen name="CharacterSheet" component={CharacterSheet} />
             <Stack.Screen name="CampaignScreen" component={CampaignScreen} />
             <Stack.Screen name="OnlineScreen" component={OnlineScreen} />
+            <Stack.Screen name="CreateGame" component={CreateGame} />
           </Stack.Navigator>
           ) : (
-          <Stack.Navigator initialRouteName="LogIn">
+          <Stack.Navigator initialRouteName="Foyer">
             <Stack.Screen name="Foyer" component={FoyerScreen} />
             <Stack.Screen name="LogIn" component={LogInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
