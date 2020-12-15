@@ -23,9 +23,12 @@ export default SubraceImages = {human:
         {id: 3, image: require("../assets/images/drawn/Robots/android3.jpg")},
         {id: 4, image: require("../assets/images/drawn/Robots/android4.png")},
         {id: 5, image: require("../assets/images/drawn/Robots/android5.png")},
-        {id: 6, image: require("../assets/images/drawn/Robots/android6.png")}],
+        {id: 6, image: require("../assets/images/drawn/Robots/android6.png")},
+        {id: 7, image: require("../assets/images/drawn/Robots/android7.png")}],
     husk: [{id: 1, image: require("../assets/images/drawn/Robots/husk1.jpg")},
         {id: 2, image: require("../assets/images/drawn/Robots/husk2.png")},
         {id: 3, image: require("../assets/images/drawn/Robots/husk3.png")},
-        {id: 4, image: require("../assets/images/drawn/Robots/husk4.jpg")}]}
+        {id: 4, image: require("../assets/images/drawn/Robots/husk4.jpg")},
+        {id: 5, image: require("../assets/images/drawn/Robots/husk5.png")},
+        {id: 6, image: require("../assets/images/drawn/Robots/husk6.png")}]}
 }

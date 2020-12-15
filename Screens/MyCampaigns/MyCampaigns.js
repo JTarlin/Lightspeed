@@ -42,7 +42,7 @@ function MyCampaigns({ navigation }) {
         <ScrollView style={{flex: 1}}>
           {campaigns && campaigns.map(campaign=>{
             return (
-            <TouchableOpacity onPress={()=>{navigation.push("CampaignScreen", {campaign: campaign})}}>
+            <TouchableOpacity key={campaign.id} onPress={()=>{navigation.push("CampaignScreen", {campaign: campaign})}}>
               <View key={campaign.id} style={{height: 100, width: "100%"}}>
                 <View key={campaign.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                   <Image

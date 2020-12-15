@@ -148,7 +148,6 @@ function App() {
 
   //on component lifecycle, retrieve token from async local storage
   React.useEffect(()=>{
-    console.log("useeffect triggers");
       setTimeout(async()=>{
       let userToken;
       userToken = null;
@@ -157,10 +156,8 @@ function App() {
         if(userToken) {
           //we have data
           dispatch({type: "RETRIEVE_TOKEN", token: userToken});
-          console.log("retrieving token");
         } else {
           dispatch({type: "LOGOUT"})
-          console.log("logging out");
         }
       } catch(e) {
         console.log("user token retrieve error: "+e);
@@ -180,7 +177,6 @@ function App() {
   
   return (
     <AuthContext.Provider value={authContext}>
-      {console.log("return statement running")}
       <UserTokenContext.Provider value={loginState.userToken}>
         <NavigationContainer>
           {loginState.userToken !== null ? (
