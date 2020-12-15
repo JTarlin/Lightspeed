@@ -15,7 +15,7 @@ export default function OnlineScreen({navigation}){
     //get the current signed-in user's token from appropriate context
     const userToken = React.useContext(UserTokenContext);
     const loadGames=()=>{
-        db.ref('allGames/' + userToken).once("value", function(snapshot) {
+        db.ref('allUsersGames/' + userToken).once("value", function(snapshot) {
         if(snapshot.exists()) { //if we have games for this user
             let gameArray=Object.values(snapshot.val());
             setGames(gameArray); //set the games array to an array of character data from db

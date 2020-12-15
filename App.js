@@ -148,7 +148,7 @@ function App() {
 
   //on component lifecycle, retrieve token from async local storage
   React.useEffect(()=>{
-    async()=>{
+      setTimeout(async()=>{
       let userToken;
       userToken = null;
       try{
@@ -162,7 +162,8 @@ function App() {
       } catch(e) {
         console.log("user token retrieve error: "+e);
       }
-    }
+    }, 100);
+    
   }, []);
 
   if(loginState.isLoading) {
