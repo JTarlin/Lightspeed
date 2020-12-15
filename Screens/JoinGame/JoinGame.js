@@ -37,9 +37,10 @@ export default function JoinGame({navigation}) {
             <ScrollView >
                 <Text> Select a Game to Join</Text>
                 {games && games.map(game=>{
+                    if(game.creator!==userToken) {
                     return (
-                    <TouchableOpacity key={game.id} onPress={()=>{console.log("pushed game button")}}>
-                        {/* navigation.push("gameScreen", {game: game}) */}
+                    <TouchableOpacity key={game.id} onPress={()=>{console.log("pressed game ")}}>
+                        
                         <View key={game.id} style={{height: 100, width: "100%"}}>
                             <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                             <Image
@@ -49,11 +50,11 @@ export default function JoinGame({navigation}) {
                             <Text style={{fontSize: 20, marginLeft: 40}}>{game.name}</Text>
                             <Button 
                                 title={"JOIN"}
-                                onPress={()=>{console.log("joined game")}}
+                                onPress={()=>{navigation.push("AddCharToGame", {game: game})}}
                             />
                             </View>
                         </View>
-                    </TouchableOpacity>)
+                    </TouchableOpacity>)}
                 })}
             </ScrollView>
         </View>
