@@ -22,6 +22,7 @@ import CharacterSheet from "./Screens/CharacterSheet/CharacterSheet";
 import CampaignScreen from "./Screens/CampaignScreen/CampaignScreen";
 import OnlineScreen from "./Screens/OnlineScreen/OnlineScreen";
 import CreateGame from "./Screens/CreateGame/CreateGame";
+import JoinGame from "./Screens/JoinGame/JoinGame";
 //if user is signed out
 import FoyerScreen from "./Screens/Foyer/Foyer";
 import LogInScreen from "./Screens/LogIn/LogIn";
@@ -192,6 +193,7 @@ function App() {
             <Stack.Screen name="CampaignScreen" component={CampaignScreen} />
             <Stack.Screen name="OnlineScreen" component={OnlineScreen} />
             <Stack.Screen name="CreateGame" component={CreateGame} />
+            <Stack.Screen name="JoinGame" component={JoinGame} />
           </Stack.Navigator>
           ) : (
           <Stack.Navigator initialRouteName="Foyer">
