@@ -14,7 +14,6 @@ export default function OnlineScreen({navigation}){
 
 
     const [games, setGames] = React.useState(null);
-    const [currentUsername, setCurrentUsername] = React.useState(null);
 
     //get the current signed-in user's token from appropriate context
     const userToken = React.useContext(UserTokenContext)[0];
@@ -55,7 +54,7 @@ export default function OnlineScreen({navigation}){
             {!games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20}}>Create or join a game to see it here</Text>}
             {games && games.map(game=>{
                 return(
-                    <TouchableOpacity onPress={()=>{console.log("pushed")}} style={styles.box}>
+                    <TouchableOpacity onPress={()=>{navigation.push("GameScreen", {gameId: game.id})}} style={styles.box}>
                         <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                             <Image
                                 source={game.image}
@@ -64,7 +63,6 @@ export default function OnlineScreen({navigation}){
                                 <View style={{marginLeft: 40}} >
                                     <Text style={styles.name}>{game.name}</Text>
                                     <Text>Creator: {game.creator}</Text>
-                                    
                                 </View>
                         </View>
                     </TouchableOpacity>

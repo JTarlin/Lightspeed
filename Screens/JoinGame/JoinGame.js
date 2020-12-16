@@ -40,7 +40,7 @@ export default function JoinGame({navigation}) {
                 {games && games.map(game=>{
                     if(game.creator!==username) {
                     return (
-                    <TouchableOpacity style={styles.box} key={game.id} onPress={()=>{navigation.push("GameScreen", {game: game})}}>
+                    <TouchableOpacity style={styles.box} key={game.id} onPress={()=>{navigation.push("GameScreen", {gameId: game.id})}}>
                         <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                             <Image
                                 source={game.image}
@@ -52,7 +52,7 @@ export default function JoinGame({navigation}) {
                             </View>
                             <Button 
                                 title={"JOIN"}
-                                onPress={()=>{navigation.push("AddCharToGame", {game: game})}}
+                                onPress={()=>{navigation.push("AddCharToGame", {game: game}); console.log(" join players: "+game.players)}}
                             />
                         </View>
                     </TouchableOpacity>)}
