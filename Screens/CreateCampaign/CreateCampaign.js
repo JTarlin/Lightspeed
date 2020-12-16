@@ -57,8 +57,9 @@ function CreateCampaign(props) {
     function renderChars(chars){
         return chars.map(char => {
             return (
-                <TouchableOpacity onPress={()=>{navigation.push("CharacterSheet", {character: char})}} key={char.id}>
+                <TouchableOpacity onPress={()=>{navigation.push("CharacterSheet", {character: char})}} key={char.id} style={{marginRight: 15}}>
                     <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={char.image} />
+                    <Text style={styles.charName}>{char.name}</Text>
                 </TouchableOpacity>
             )
         })
@@ -104,29 +105,31 @@ function CreateCampaign(props) {
             </Modal>
 
             <View style={{flex: 1, alignItems: "center"}}>
-                <Text>Enter Campaign Name</Text>
+                <Text style={styles.label}>Enter Campaign Name</Text>
                 <TextInput
                     onChangeText={text => setCampaignObj({...campaignObj, name: text})}
                     value={campaignObj.name}
                     style={styles.input}
                 />
-                <Text>Choose Campaign Thumbnail</Text>
+                <Text style={styles.label}>Choose Campaign Thumbnail</Text>
                 <TouchableOpacity onPress={toggleThumbModal}>
                     <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={campaignObj.image} />
                 </TouchableOpacity>
 
-                <Text>Add Characters to Campaign</Text>
-                <View style={{height: 110, width: "100%"}}>
-                    <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", backgroundColor: "#98b8eb"}}>
-                        <TouchableOpacity onPress={addCharacters}>
-                            <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={null} />
+                <Text style={styles.label}>Add Characters to Campaign</Text>
+                <View style={{height: 150, width: "100%"}}>
+                    <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", ...styles.slidePicker}}>
+                        <TouchableOpacity onPress={addCharacters} style={{marginRight: 15}}>
+                            <View style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black", backgroundColor: "white"}}/>
+                            <Text style={styles.charName}>Add New</Text>
                         </TouchableOpacity>
                         {renderChars(campaignObj.characters)}
                     </ScrollView>
                 </View>
                 
-                
-                <Button onPress={publishCampaign} title="C R E A T E"/>
+                <View style={{marginTop: 20}}>
+                    <Button onPress={publishCampaign} title="C R E A T E"/>
+                </View>
             </View>
         </View>
     );
@@ -145,7 +148,24 @@ const styles = StyleSheet.create({
         width: 150,
         height: 40,
         marginBottom: 10,
-      }
+      },
+    label: {
+        color: "#68a9de",
+        fontSize: 16,
+        marginTop: 10,
+    },
+    slidePicker: {
+        padding: 10,
+        backgroundColor: "#98b8eb", 
+        flex: 1,
+    },
+    charName: {
+        textAlign: "center",
+        fontSize: 16,
+        marginTop: 5,
+    }
 })
+
+
 
 export default CreateCampaign;
