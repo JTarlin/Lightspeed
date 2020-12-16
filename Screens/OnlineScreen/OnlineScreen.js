@@ -23,9 +23,14 @@ export default function OnlineScreen({navigation}){
         })
     }
 
-    if(!games) {
+    //load games on initial component render
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
         loadGames();
-    }
+        });
+
+        return unsubscribe;
+    }, [navigation]); //runs on mount and whenever navigation changes
 
     return (
         <View style={{flex:1}}>
@@ -35,7 +40,7 @@ export default function OnlineScreen({navigation}){
                     <Text>CREATE NEW GAME</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{console.log("pressed join nrw game")}}>
+            <TouchableOpacity onPress={()=>{navigation.push("JoinGame")}}>
                 <View style={{height: 60, width: "100%", backgroundColor: "#98b8eb"}}>
                     <Text>JOIN NEW GAME</Text>
                 </View>

@@ -11,7 +11,7 @@ import {db} from '../../src/config';
 
 export default function CreateGame({navigation}) {
 
-    const [gameObj, setGameObj] = React.useState({name: null, campaign: null, players: null, characters: null, public: null, password: null, image: null});
+    const [gameObj, setGameObj] = React.useState({name: null, campaign: null, players: [], playerCharacters: [], characters: [], public: null, password: null, image: null});
 
     //get all campaigns for this player to choose from
     const [campaigns, setCampaigns] = React.useState(null);
@@ -41,9 +41,10 @@ export default function CreateGame({navigation}) {
                 name: gameObj.name,
                 public: gameObj.public,
                 password: gameObj.password,
-                characters: gameObj.characters,
+                characters: gameObj.campaign.characters,
                 campaign: gameObj.campaign,
                 players: gameObj.players,
+                playerCharacters: gameObj.playerCharacters,
                 creator: userToken,
             });
 
@@ -53,9 +54,10 @@ export default function CreateGame({navigation}) {
                 name: gameObj.name,
                 public: gameObj.public,
                 password: gameObj.password,
-                characters: gameObj.characters,
+                characters: gameObj.campaign.characters,
                 campaign: gameObj.campaign,
                 players: gameObj.players,
+                playerCharacters: gameObj.playerCharacters,
                 creator: userToken,
             });
 

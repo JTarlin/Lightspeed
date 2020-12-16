@@ -11,8 +11,9 @@ function TitleText(props) {
 
 const styles = StyleSheet.create({
     title: {
-      fontSize: 20,
-      color: "#98b8eb"
+      fontSize: 24,
+      color: "#98b8eb",
+      fontWeight: "bold",
     }
   })
 
