@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import uuid from 'react-native-uuid';
 
 //component imports
 import CustomHeader from "../../Components/CustomHeader";
@@ -39,7 +40,33 @@ export default function AddCharToGame({navigation, ...props}) {
     }, [navigation]); //runs on mount and whenever navigation changes
 
     function joinGame() {
-        console.log("join campaign");
+        console.log("join game");
+
+        //if certain fields need to be created if empty
+        if(!game.playerCharacters) {
+            game.playerCharacters=[];
+        }
+        if(!game.players) {
+            game.players=[];
+        }
+        
+        //add this Game's state data to the database, only if all fields are completed (no null in state)
+        if(myCharacter && myContact){
+            const gameId=uuid.v1(); //set campaign id (campaigns CAN have duplicate names)
+
+            db.ref('allUsersGames/' + userToken + "/"+gameId).set({...game,
+                playerCharacters: game.playerCharacters.push(myCharacter),
+                players: game.players.push(userToken),
+            });
+
+            db.ref('allGames/'+game.id).set({...game,
+                playerCharacters: game.playerCharacters.push(myCharacter),
+                players: game.players.push(userToken),
+            });
+
+            //if we've successfully published a new char, go to view chars
+            navigation.navigate("MyCampaigns");
+        }
     }
 
     return (
