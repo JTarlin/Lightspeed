@@ -13,7 +13,7 @@ import {db} from '../../src/config';
 function MyCampaigns({ navigation }) {
 
   //get the current signed-in user's token from appropriate context
-  const userToken = React.useContext(UserTokenContext);
+  const userToken = React.useContext(UserTokenContext)[0];
 
   const [campaigns, setCampaigns] = React.useState(null);
 

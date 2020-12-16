@@ -15,6 +15,9 @@ export default function JoinGame({navigation}) {
     //store available games in state
     const [games, setGames] = React.useState(null);
 
+    //get the current signed-in user's token from appropriate context
+    const username = React.useContext(UserTokenContext)[1];
+
     //get games from db
     const loadGames=()=>{
         db.ref('allGames').once("value", function(snapshot) {
@@ -29,17 +32,13 @@ export default function JoinGame({navigation}) {
         loadGames();
     }
 
-    //get the current signed-in user's token from appropriate context
-    const userToken = React.useContext(UserTokenContext);
-
-
     return (
         <View>
             <CustomHeader title={"J O I N  G A M E"} goBack={()=>{navigation.goBack()}}/>
             <ScrollView >
                 <Text style={{textAlign: "center", fontSize: 20}}> Select a Game to Join</Text>
                 {games && games.map(game=>{
-                    if(game.creator!==userToken) {
+                    if(game.creator!==username) {
                     return (
                     <TouchableOpacity style={styles.box} key={game.id} onPress={()=>{navigation.push("GameScreen", {game: game})}}>
                         <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
@@ -47,7 +46,10 @@ export default function JoinGame({navigation}) {
                                 source={game.image}
                                 style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginLeft: 10}}
                                 key={game.id}/>
-                            <Text style={styles.name}>{game.name}</Text>
+                            <View style={{marginLeft:40}}>
+                                <Text style={styles.name}>{game.name}</Text>
+                                <Text>Creator: {game.creator}</Text>
+                            </View>
                             <Button 
                                 title={"JOIN"}
                                 onPress={()=>{navigation.push("AddCharToGame", {game: game})}}
@@ -62,7 +64,6 @@ export default function JoinGame({navigation}) {
 
 const styles = StyleSheet.create({
     name: {
-        marginLeft: 40,
         fontSize: 25,
         color: "#0d4d82",
     },

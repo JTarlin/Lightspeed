@@ -14,9 +14,10 @@ export default function OnlineScreen({navigation}){
 
 
     const [games, setGames] = React.useState(null);
+    const [currentUsername, setCurrentUsername] = React.useState(null);
 
     //get the current signed-in user's token from appropriate context
-    const userToken = React.useContext(UserTokenContext);
+    const userToken = React.useContext(UserTokenContext)[0];
     const loadGames=()=>{
         db.ref('allUsersGames/' + userToken).once("value", function(snapshot) {
         if(snapshot.exists()) { //if we have games for this user
@@ -60,7 +61,11 @@ export default function OnlineScreen({navigation}){
                                 source={game.image}
                                 style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginLeft: 10}}
                                 key={game.id}/>
-                            <Text style={styles.name}>{game.name}</Text>
+                                <View style={{marginLeft: 40}} >
+                                    <Text style={styles.name}>{game.name}</Text>
+                                    <Text>Creator: {game.creator}</Text>
+                                    
+                                </View>
                         </View>
                     </TouchableOpacity>
                 )
@@ -72,7 +77,6 @@ export default function OnlineScreen({navigation}){
 
 const styles = StyleSheet.create({
     name: {
-        marginLeft: 40,
         fontSize: 25,
         color: "#0d4d82",
     },

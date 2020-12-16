@@ -10,7 +10,8 @@ import {db} from '../../src/config';
 function MyCharacters({ navigation }) {
 
   //get the current signed-in user's token from appropriate context
-  const userToken = React.useContext(UserTokenContext);
+  const userData = React.useContext(UserTokenContext);
+  const userToken = userData[0];
 
   const [characters, setCharacters] = React.useState(null);
 
