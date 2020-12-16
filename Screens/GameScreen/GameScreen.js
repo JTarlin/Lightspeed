@@ -32,7 +32,7 @@ export default function GameScreen({navigation, ...props}) {
         const charCards=[]
         for(let i=0; i<players.length; i++){
             charCards.push(
-                <View style={styles.playerCard} key={players[i].id}>
+                <View style={styles.playerCard} key={i}>
                     <Text style={styles.label}>{players[i]}</Text>
                     <View style={{flex:1, flexDirection: "row", justifyContent: "space-around"}}>
                         <View>
