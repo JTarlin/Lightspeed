@@ -68,29 +68,31 @@ export default function CreateGame({navigation}) {
 
     return (
         <KeyboardAvoidingView style={{flex:1}} behavior={"position"} keyboardVerticalOffset={100-useWindowDimensions().height}>
-            <ScrollView>
+            <ScrollView >
                 <CustomHeader title={"C R E A T E  G A M E"} goBack={()=>{navigation.goBack()}}/>
-                <View>
-                    <View>
-                        <Text>Game Title</Text>
-                        <TextInput
-                            onChangeText={text => setGameObj({...gameObj, name: text})}
-                            value={gameObj.name}
-                            style={styles.input}
-                        />
-                        
-                    </View>
+                <View style={{flex:1, alignItems: "center"}}>
+
+                    <Text style={{...styles.label, textAlign: "center"}}>Game Title</Text>
+                    <TextInput
+                        onChangeText={text => setGameObj({...gameObj, name: text})}
+                        value={gameObj.name}
+                        style={styles.input}
+                    />
                     {!gameObj.campaign &&
-                    <View>
-                        <Text>Choose Campaign</Text>
-                        <View style={{height: 160, width: "100%"}}>
-                            <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", backgroundColor: "#98b8eb"}}>
+                    <View style={{width: "100%"}}>
+                        <Text style={{...styles.label, textAlign: "center"}}>Choose Campaign</Text>
+                        <View style={{height: 170, width: "100%", marginBottom: 20}}>
+                            <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", backgroundColor: "#98b8eb", ...styles.slidePicker}}>
                                 {campaigns && campaigns.map(campaign=>{
                                     return (
-                                    <TouchableOpacity onPress={()=>{setGameObj({...gameObj, campaign: campaign})}} key={campaign.id}>
+                                    <TouchableOpacity
+                                        onPress={()=>{setGameObj({...gameObj, campaign: campaign})}}
+                                        key={campaign.id}
+                                        style={{marginRight: 15}}
+                                        >
                                         <View style={{width: 110, height: 150, borderRadius: 10}}>
                                             <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={campaign.image} />
-                                            <Text>{campaign.name}</Text>
+                                            <Text style={styles.gameName}>{campaign.name}</Text>
                                         </View>
                                     </TouchableOpacity>)
                                 })}
@@ -101,19 +103,19 @@ export default function CreateGame({navigation}) {
                     <View style={{alignItems: "center"}}>
                         <Text style={{fontSize: 30}}>{gameObj.campaign.name}</Text>
                         <Image
-                            style={{height: 300, width: 300, borderRadius: 150, borderWidth: 3, borderColor: "black"}} 
+                            style={{height: 300, width: 300, borderRadius: 150, borderWidth: 3, marginBottom: 10, borderColor: "black"}} 
                             source={gameObj.campaign.image}
                         />
                     </View>
                     }
-                    <View>
+                    <View style={{width: 200, marginBottom: 10}}>
                         <SwitchSelector
                             initial={1}
                             onPress={value => {setGameObj({...gameObj, public: value})}}
-                            textColor={'#7a44cf'} //'#7a44cf'
-                            selectedColor={'#7a44cf'}
-                            buttonColor={'#7a44cf'}
-                            borderColor={'#7a44cf'}
+                            textColor={"#0d4d82"} //'"#98b8eb"'
+                            selectedColor={"#0d4d82"}
+                            buttonColor={"#0d4d82"}
+                            borderColor={"#0d4d82"}
                             hasPadding
                             options={[
                                 { label: "Public", value: true},
@@ -121,8 +123,8 @@ export default function CreateGame({navigation}) {
                             ]}
                         />
                         {!gameObj.public &&
-                        <View>
-                            <Text>Enter Password:</Text>
+                        <View style={{flex: 1, alignItems: "center"}}>
+                            <Text style={{...styles.label, textAlign: "center"}}>Enter Password:</Text>
                             <TextInput 
                                 onChangeText={text => setGameObj({...gameObj, password: text})}
                                 value={gameObj.password}
@@ -146,5 +148,20 @@ const styles = StyleSheet.create({
         width: 150,
         height: 40,
         marginBottom: 10,
-      }
+    },
+    label: {
+        color: "#68a9de",
+        fontSize: 16,
+        marginTop: 10,
+    },
+    slidePicker: {
+        padding: 10,
+        backgroundColor: "#98b8eb", 
+        flex: 1,
+    },
+    gameName: {
+        textAlign: "center",
+        fontSize: 16,
+        marginTop: 5,
+    }
 })

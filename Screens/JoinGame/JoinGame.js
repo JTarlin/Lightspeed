@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, Image, ScrollView} from 'react-native';
 
 //component imports
 import CustomHeader from "../../Components/CustomHeader";
 import {UserTokenContext} from "../../Components/context";
 
+//style imports
+import {boxStyle} from "../../Components/StyleBox";
 //function imports
 import {db} from '../../src/config';
 
@@ -35,24 +37,21 @@ export default function JoinGame({navigation}) {
         <View>
             <CustomHeader title={"J O I N  G A M E"} goBack={()=>{navigation.goBack()}}/>
             <ScrollView >
-                <Text> Select a Game to Join</Text>
+                <Text style={{textAlign: "center", fontSize: 20}}> Select a Game to Join</Text>
                 {games && games.map(game=>{
                     if(game.creator!==userToken) {
                     return (
-                    <TouchableOpacity key={game.id} onPress={()=>{console.log("pressed game ")}}>
-                        
-                        <View key={game.id} style={{height: 100, width: "100%"}}>
-                            <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
+                    <TouchableOpacity style={styles.box} key={game.id} onPress={()=>{navigation.push("GameScreen", {game: game})}}>
+                        <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                             <Image
                                 source={game.image}
-                                style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginTop: 30}}
+                                style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginLeft: 10}}
                                 key={game.id}/>
-                            <Text style={{fontSize: 20, marginLeft: 40}}>{game.name}</Text>
+                            <Text style={styles.name}>{game.name}</Text>
                             <Button 
                                 title={"JOIN"}
                                 onPress={()=>{navigation.push("AddCharToGame", {game: game})}}
                             />
-                            </View>
                         </View>
                     </TouchableOpacity>)}
                 })}
@@ -60,3 +59,14 @@ export default function JoinGame({navigation}) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    name: {
+        marginLeft: 40,
+        fontSize: 25,
+        color: "#0d4d82",
+    },
+    box: {
+        height: 100, width: "95%", margin:10, ...boxStyle.box
+    }
+  })
