@@ -101,7 +101,8 @@ function CreateCharacter(props) {
     }
 
     //get the current signed-in user's token from appropriate context
-    const userToken = React.useContext(UserTokenContext);
+    const userToken = React.useContext(UserTokenContext)[0];
+    const username = React.useContext(UserTokenContext)[1];
 
     function publishCharacter() {
         //add this character's state data to the database, only if all fields are completed (no null in state)
@@ -116,6 +117,7 @@ function CreateCharacter(props) {
                 id: characterId,
                 name: characterObj.name,
                 rank: 0,
+                creator: username,
             });
 
             //if we've successfully published a new char, go to view chars

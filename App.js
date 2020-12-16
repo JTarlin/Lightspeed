@@ -180,7 +180,7 @@ function App() {
   
   return (
     <AuthContext.Provider value={authContext}>
-      <UserTokenContext.Provider value={loginState.userToken}>
+      <UserTokenContext.Provider value={[loginState.userToken, loginState.userName]}>
         <NavigationContainer>
           {loginState.userToken !== null ? (
           <Stack.Navigator initialRouteName="Home" headerMode="none">

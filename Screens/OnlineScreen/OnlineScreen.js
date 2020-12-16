@@ -3,7 +3,6 @@ import { Button, View, ScrollView, Image, Text, StyleSheet, TouchableOpacity} fr
 import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";
-import GetUserName from "../../Components/GetUserName";
 
 //style imports
 import {boxStyle} from "../../Components/StyleBox";
@@ -18,7 +17,7 @@ export default function OnlineScreen({navigation}){
     const [currentUsername, setCurrentUsername] = React.useState(null);
 
     //get the current signed-in user's token from appropriate context
-    const userToken = React.useContext(UserTokenContext);
+    const userToken = React.useContext(UserTokenContext)[0];
     const loadGames=()=>{
         db.ref('allUsersGames/' + userToken).once("value", function(snapshot) {
         if(snapshot.exists()) { //if we have games for this user
@@ -36,30 +35,6 @@ export default function OnlineScreen({navigation}){
 
         return unsubscribe;
     }, [navigation]); //runs on mount and whenever navigation changes
-
-   
-
-    function getUserName(token) {
-        
-        db.ref('users').once("value", function(snapshot) {
-            if(snapshot.exists()) { //if we have users
-                let userArray=Object.values(snapshot.val()); //get array of user values as "user"
-                for(const user of userArray) {
-                    if(user.userToken===token) {
-                        setCurrentUsername(user.username);
-                    }
-                }
-            }
-        })
-
-        if(currentUsername) {
-            console.log(currentUsername)
-            return currentUsername;
-            
-        }
-    }
-
-    getUserName(userToken);
 
     return (
         <View style={{flex:1}}>
@@ -88,7 +63,7 @@ export default function OnlineScreen({navigation}){
                                 key={game.id}/>
                                 <View style={{marginLeft: 40}} >
                                     <Text style={styles.name}>{game.name}</Text>
-                                    <Text>Creator: {getUserName(game.creator)}</Text>
+                                    <Text>Creator: {game.creator}</Text>
                                     
                                 </View>
                         </View>

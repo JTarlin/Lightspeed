@@ -16,7 +16,7 @@ export default function CreateGame({navigation}) {
     //get all campaigns for this player to choose from
     const [campaigns, setCampaigns] = React.useState(null);
 
-    const userToken = React.useContext(UserTokenContext);
+    const [userToken, username] = React.useContext(UserTokenContext);
     const loadCampaigns=()=>{
         db.ref('allCampaigns/' + userToken).once("value", function(snapshot) {
           if(snapshot.exists()) { //if we have campaigns for this user
@@ -45,7 +45,7 @@ export default function CreateGame({navigation}) {
                 campaign: gameObj.campaign,
                 players: gameObj.players,
                 playerCharacters: gameObj.playerCharacters,
-                creator: userToken,
+                creator: username,
             });
 
             db.ref('allGames/'+gameId).set({
@@ -58,7 +58,7 @@ export default function CreateGame({navigation}) {
                 campaign: gameObj.campaign,
                 players: gameObj.players,
                 playerCharacters: gameObj.playerCharacters,
-                creator: userToken,
+                creator: username,
             });
 
             //if we've successfully published a new char, go to view chars

@@ -67,7 +67,7 @@ function CreateCampaign(props) {
     }
 
     //get the current signed-in user's token from appropriate context
-    const userToken = React.useContext(UserTokenContext);
+    const [userToken, username] = React.useContext(UserTokenContext);
     function publishCampaign() {
         //add this Campaign's state data to the database, only if all fields are completed (no null in state)
         if(campaignObj.image && campaignObj.name && campaignObj.characters.length>0){
@@ -78,6 +78,7 @@ function CreateCampaign(props) {
                 id: campaignId,
                 name: campaignObj.name,
                 characters: campaignObj.characters,
+                creator: username,
             });
 
             //if we've successfully published a new char, go to view chars
