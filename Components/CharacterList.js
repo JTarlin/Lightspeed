@@ -17,7 +17,7 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
 
     const includeAddButton = (char)=>{
         if(addFunction) {
-            return <Button style={{alignSelf: "flex-end"}} onPress={()=>{           
+            return <Button key={char.id} style={{alignSelf: "flex-end"}} onPress={()=>{           
             logCharId(char.id);
             addFunction(char);
         }} title={"Add"}/>;
