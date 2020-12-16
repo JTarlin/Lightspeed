@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
-
+import CustomHeader from "../../Components/CustomHeader";
 import {AuthContext} from "../../Components/context";
 
 function LogInScreen({ navigation }) {
@@ -11,25 +11,30 @@ function LogInScreen({ navigation }) {
   const {signIn} = React.useContext(AuthContext);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Log In Screen</Text>
+    <View style={{ flex: 1}}>
+      <CustomHeader title={"L O G I N"} goBack={()=>{navigation.goBack()}}/>
+      <View style={{width: "100%", height: 300}}>
+        <View style={{flex:1, alignItems: "center", marginTop: 200}}>
+          <Text style={styles.label}>Enter Username</Text>
+          <TextInput
+            onChangeText={text => setUsernameText(text)}
+            value={usernameText}
+            style={styles.input}
+          />
+          <Text style={styles.label}>Enter Password</Text>
+          <TextInput
+            onChangeText={text => setPasswordText(text)}
+            value={passwordText}
+            style={styles.input}
+          />
 
-      <TextInput
-        onChangeText={text => setUsernameText(text)}
-        value={usernameText}
-        style={styles.input}
-      />
-      <TextInput
-        onChangeText={text => setPasswordText(text)}
-        value={passwordText}
-        style={styles.input}
-      />
 
-
-      <Button
-        title="Log In"
-        onPress={() => {signIn(usernameText, passwordText)}}
-      />
+          <Button
+            title="Log In"
+            onPress={() => {signIn(usernameText, passwordText)}}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -42,6 +47,11 @@ const styles = StyleSheet.create({
     width: 150,
     height: 40,
     marginBottom: 10,
+  },
+  label: {
+    color: "#68a9de",
+    fontSize: 16,
+    marginTop: 10,
   }
 })
 
