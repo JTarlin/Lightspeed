@@ -2,6 +2,9 @@ import * as React from 'react';
 import {View, ScrollView, Image, Text, TouchableOpacity, StyleSheet, Button} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+//style imports
+import {boxStyle} from "./StyleBox";
+
 export default function CharacterList({characters, addFunction, selectedChars}) {
 
     const navigation = useNavigation();
@@ -23,10 +26,6 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
 
     //take an id and add it to the selectedCharIds state
     const logCharId = (id)=>{
-        // let tempCharIds = selectedCharIds;
-        // tempCharIds.push(id);
-        // console.log("selected char ids: "+tempCharIds);
-        // console.log("actual state selected chars: "+selectedCharIds);
         setSelectedCharIds([...selectedCharIds, id]);
     }
 
@@ -37,10 +36,10 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
             if(!selectedCharIds.includes(char.id)){
                 return (
                     <TouchableOpacity key={char.id} onPress={()=>{navigation.navigate("CharacterSheet", {character: char})}}  >
-                        <View key={char.id} style={{height: 100, width: "100%"}}>
+                        <View key={char.id} style={styles.box}>
                             <View key={char.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
-                                <Image source={char.image} style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginTop: 30}} key={char.id}/>
-                                <Text style={{fontSize: 20, marginLeft: 40}}>{char.name}</Text>
+                                <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: "black"}} key={char.id}/>
+                                <Text style={{...styles.name}}>{char.name}</Text>
                                 {includeAddButton(char)}
                             </View>
                             
@@ -51,3 +50,14 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
         </ScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+    name: {
+        marginLeft: 40,
+        fontSize: 25,
+        color: "#0d4d82",
+    },
+    box: {
+        height: 100, width: "95%", margin:10, ...boxStyle.box
+    }
+})
