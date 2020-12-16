@@ -4,6 +4,9 @@ import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";
 
+//style imports
+import {boxStyle} from "../../Components/StyleBox";
+
 //function imports
 import {db} from '../../src/config';
 
@@ -35,27 +38,29 @@ export default function OnlineScreen({navigation}){
     return (
         <View style={{flex:1}}>
             <CustomHeader title={"O N L I N E"} goBack={()=>{navigation.goBack()}}/>
-            <TouchableOpacity onPress={()=>{navigation.push("CreateGame")}}>
-                <View style={{height: 60, width: "100%", backgroundColor: "#98b8eb"}}>
-                    <Text>CREATE NEW GAME</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.push("JoinGame")}}>
-                <View style={{height: 60, width: "100%", backgroundColor: "#98b8eb"}}>
-                    <Text>JOIN NEW GAME</Text>
-                </View>
-            </TouchableOpacity>
+            <View style={{marginBottom:10}}>
+                <Button
+                    onPress={()=>{navigation.push("CreateGame")}} 
+                    style={{height: 60, width: "100%", backgroundColor: "#98b8eb"}}
+                    title={"CREATE NEW GAME"}
+                />
+            </View>
+            <Button
+                onPress={()=>{navigation.push("JoinGame")}} 
+                style={{height: 60, width: "100%", backgroundColor: "#98b8eb", marginBottom: 10}}
+                title={"JOIN NEW GAME"}
+            />
+            {games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20}}>My Games:</Text>}
+            {!games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20}}>Create or join a game to see it here</Text>}
             {games && games.map(game=>{
                 return(
-                    <TouchableOpacity onPress={()=>{console.log("pushed")}}>
-                        <View key={game.id} style={{height: 100, width: "100%"}}>
-                            <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
+                    <TouchableOpacity onPress={()=>{console.log("pushed")}} style={styles.box}>
+                        <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                             <Image
                                 source={game.image}
-                                style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginTop: 30}}
+                                style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginLeft: 10}}
                                 key={game.id}/>
-                            <Text style={{fontSize: 20, marginLeft: 40}}>{game.name}</Text>
-                            </View>
+                            <Text style={styles.name}>{game.name}</Text>
                         </View>
                     </TouchableOpacity>
                 )
@@ -63,3 +68,15 @@ export default function OnlineScreen({navigation}){
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    name: {
+        marginLeft: 40,
+        fontSize: 25,
+        color: "#0d4d82",
+    },
+    box: {
+        height: 100, width: "95%", margin:10, ...boxStyle.box
+    }
+  })
