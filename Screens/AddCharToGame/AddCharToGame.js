@@ -74,15 +74,15 @@ export default function AddCharToGame({navigation, ...props}) {
             <CustomHeader title={"A D D  C H A R A C T E R"} goBack={()=>{navigation.goBack()}}/>
             {!myCharacter &&
             <View>
-                <Text>Select Your Character</Text>
+                <Text style={styles.label}>Select Your Character</Text>
                 <View style={{height: 160, width: "100%"}}>
-                    <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", backgroundColor: "#98b8eb"}}>
+                    <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", ...styles.slidePicker}}>
                         {myChars && myChars.map(character=>{
                             return (
                             <TouchableOpacity onPress={()=>{setMyCharacter(character)}} key={character.id}>
                                 <View style={{width: 110, height: 150, borderRadius: 10}}>
                                     <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={character.image} />
-                                    <Text>{character.name}</Text>
+                                    <Text style={styles.charName}>{character.name}</Text>
                                 </View>
                             </TouchableOpacity>)
                         })}
@@ -94,22 +94,22 @@ export default function AddCharToGame({navigation, ...props}) {
                 <Text style={{fontSize: 20}}>You will be playing as:</Text>
                 <Text style={{fontSize: 30}}>{myCharacter.name}</Text>
                 <Image
-                    style={{height: 200, width: 200, borderRadius: 100, borderWidth: 3, borderColor: "black"}} 
+                    style={{height: 200, width: 200, borderRadius: 100, borderWidth: 3, borderColor: "black", marginBottom: 20}} 
                     source={myCharacter.image}
                 />
             </View>}
             {/* set character contact from campaign characters in game */}
             {!myContact &&
             <View>
-                <Text>Select Your Contact</Text>
+                <Text style={styles.label}>Select Your Contact</Text>
                 <View style={{height: 160, width: "100%"}}>
-                    <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", backgroundColor: "#98b8eb"}}>
+                    <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", ...styles.slidePicker}}>
                         {game.campaign.characters && game.campaign.characters.map(character=>{
                             return (
                             <TouchableOpacity onPress={()=>{setMyContact(character)}} key={character.id}>
                                 <View style={{width: 110, height: 150, borderRadius: 10}}>
                                     <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={character.image} />
-                                    <Text>{character.name}</Text>
+                                    <Text style={styles.charName}>{character.name}</Text>
                                 </View>
                             </TouchableOpacity>)
                         })}
@@ -121,7 +121,7 @@ export default function AddCharToGame({navigation, ...props}) {
                 <Text style={{fontSize: 20}}>Your Character's Contact:</Text>
                 <Text style={{fontSize: 30}}>{myContact.name}</Text>
                 <Image
-                    style={{height: 200, width: 200, borderRadius: 100, borderWidth: 3, borderColor: "black"}} 
+                    style={{height: 200, width: 200, borderRadius: 100, borderWidth: 3, borderColor: "black", marginBottom: 20}} 
                     source={myContact.image}
                 />
             </View>}
@@ -129,3 +129,22 @@ export default function AddCharToGame({navigation, ...props}) {
         </ View >
     )
 }
+
+const styles = StyleSheet.create({
+    label: {
+        color: "#68a9de",
+        fontSize: 16,
+        marginTop: 10,
+        textAlign: "center",
+    },
+    slidePicker: {
+        padding: 10,
+        backgroundColor: "#98b8eb", 
+        flex: 1,
+    },
+    charName: {
+        textAlign: "center",
+        fontSize: 16,
+        marginTop: 5,
+    }
+})
