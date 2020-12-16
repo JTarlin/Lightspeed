@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import TitleText from "./TitleText";
+
+//import icon images
+import {backIcon} from "./Icons"
 
 function CustomHeader(props) {
 
@@ -10,11 +12,13 @@ function CustomHeader(props) {
 
     return (
     <View style={{height: 60}}>
-      <View style={{ flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'center'}}>
-        <TouchableOpacity onPress={goBack}>
-            <Text>Back</Text>
+      <View style={{ flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start'}}>
+        <TouchableOpacity onPress={goBack} >
+            <Image source={backIcon} style={{height: 20 , width: 40, marginLeft: 20}}/>
         </TouchableOpacity>
-        <TitleText >{title}</TitleText>
+        <View style={{marginLeft: 10}}>
+          <TitleText >{title}</TitleText>
+        </View>
       </View>
     </View>
     );
