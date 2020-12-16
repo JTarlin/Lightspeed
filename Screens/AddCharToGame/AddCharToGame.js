@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
-import uuid from 'react-native-uuid';
 
 //component imports
 import CustomHeader from "../../Components/CustomHeader";
@@ -8,19 +7,21 @@ import {UserTokenContext} from "../../Components/context";
 
 //function imports
 import {db} from '../../src/config';
-import JoinGame from '../JoinGame/JoinGame';
 
 export default function AddCharToGame({navigation, ...props}) {
 
     const {game} = props.route.params;
+    console.log("game palyers:"+game.players)
 
     const [myChars, setMyChars] = React.useState(null);
     const [myCharacter, setMyCharacter] = React.useState(null);
     const [myContact, setMyContact] = React.useState(null);
-    const [gameObj, setGameObj] = React.useState(game);
 
     //get the current signed-in user's token from appropriate context
-    const userToken = React.useContext(UserTokenContext);
+    const userToken = React.useContext(UserTokenContext)[0];
+    const username = React.useContext(UserTokenContext)[1];
+
+    //load characters from db
     const loadChars=()=>{
         db.ref('allCharacters/' + userToken).once("value", function(snapshot) {
           if(snapshot.exists()) { //if we have characters for this user
@@ -49,23 +50,29 @@ export default function AddCharToGame({navigation, ...props}) {
         if(!game.players) {
             game.players=[];
         }
+        if(!game.contacts) {
+            game.contacts=[];
+        }
         
         //add this Game's state data to the database, only if all fields are completed (no null in state)
         if(myCharacter && myContact){
-            const gameId=uuid.v1(); //set campaign id (campaigns CAN have duplicate names)
+            console.log("the players are:" +game.players);
 
-            db.ref('allUsersGames/' + userToken + "/"+gameId).set({...game,
-                playerCharacters: game.playerCharacters.push(myCharacter),
-                players: game.players.push(userToken),
-            });
+            console.log("game: "+game);
 
-            db.ref('allGames/'+game.id).set({...game,
-                playerCharacters: game.playerCharacters.push(myCharacter),
-                players: game.players.push(userToken),
-            });
+            const gameId = game.id;
 
-            //if we've successfully published a new char, go to view chars
-            navigation.navigate("MyCampaigns");
+            //add appropriate data to game obj before push
+            game.playerCharacters.push(myCharacter)
+            game.players.push(username);
+            game.contacts.push(myContact);
+
+            db.ref('allUsersGames/' + userToken + "/"+gameId).set(game);
+
+            db.ref('allGames/'+game.id).set(game);
+
+            //if we've successfully joined a new game, go to that game
+            navigation.navigate("GameScreen", {gameId: game.id});
         }
     }
 
