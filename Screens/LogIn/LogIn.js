@@ -15,13 +15,13 @@ function LogInScreen({ navigation }) {
       <CustomHeader title={"L O G I N"} goBack={()=>{navigation.goBack()}}/>
       <View style={{width: "100%", height: 300}}>
         <View style={{flex:1, alignItems: "center", marginTop: 200}}>
-          <Text>Enter Username</Text>
+          <Text style={styles.label}>Enter Username</Text>
           <TextInput
             onChangeText={text => setUsernameText(text)}
             value={usernameText}
             style={styles.input}
           />
-          <Text>Enter Password</Text>
+          <Text style={styles.label}>Enter Password</Text>
           <TextInput
             onChangeText={text => setPasswordText(text)}
             value={passwordText}
@@ -47,6 +47,11 @@ const styles = StyleSheet.create({
     width: 150,
     height: 40,
     marginBottom: 10,
+  },
+  label: {
+    color: "#68a9de",
+    fontSize: 16,
+    marginTop: 10,
   }
 })
 
