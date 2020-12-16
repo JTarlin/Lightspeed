@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Button, View, ScrollView, Image, Text, StyleSheet} from 'react-native';
 import CustomHeader from "../../Components/CustomHeader";
 import CharacterList from "../../Components/CharacterList";
-
 import {UserTokenContext} from "../../Components/context";
 
 //function imports

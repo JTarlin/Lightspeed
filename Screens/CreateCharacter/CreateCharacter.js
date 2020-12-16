@@ -8,6 +8,9 @@ import ImageDisplay from "../../Components/ImageDisplay";
 import CustomHeader from "../../Components/CustomHeader";
 import {UserTokenContext} from "../../Components/context";
 
+//style imports
+import {boxStyle} from "../../Components/StyleBox";
+
 //function imports
 import {db} from '../../src/config';
 
@@ -66,32 +69,32 @@ function CreateCharacter(props) {
         switch(classType) {
             case "heavy":
                 return (
-                    <Text>
+                    <Text style={styles.classText}>
                         As a heavy, your name means strength. You could be an honourable marine, a ruthless pirate, or anything in between, but you win fights all the same. It may be the others who do the charming, but when things go south, you’re the one who everyone turns to.
                     </Text>)
             case "hunter":
                 return (
-                    <Text>
+                    <Text style={styles.classText}>
                         It’s easy for things to go missing in such an immense galaxy - people too. Hunters are the ones who make sure that doesn’t happen, no matter how hidden their quarry may be. Finding your target in the endless sprawl of space isn’t an easy job, but you get it done either way.
                     </Text>)
             case "pilot":
                 return (
-                    <Text>
+                    <Text style={styles.classText}>
                         An engine is just a hunk of metal. When you get behind the controls though, it becomes a living thing, and it answers to you. As a pilot, you do the real heavy lifting for your crew, whether they admit it or not.
                     </Text>)
             case "tech":
                 return (
-                    <Text>
+                    <Text style={styles.classText}>
                         It isn’t magic that keeps society ticking. It’s all wired up, and you’re the one doing the wiring. As a tech, you are an architect of the future, which is just about here. You could be a warship’s engineer, an undercover hacker, or a scrapyard scavenger.
                     </Text>)
             case "trader":
                 return (
-                    <Text>
+                    <Text style={styles.classText}>
                         A lot goes into the crew of a ship, but they probably wouldn’t be there if it weren’t for you. Traders are the ones paying the wages, whether you’re a dealer in exotic xeno beasts or illegal gun parts. The others may do the fighting, but you decide who’s getting shot. 
                     </Text>)
             default:
                 return (
-                    <Text>
+                    <Text style={styles.classText}>
                         Your class represents the work you do to make a name for yourself; it determines the abilities you’ve learned and the equipment that you use. Whether you’re a ship’s genius engineer or a renegade bounty hunter, your talents are indispensable.
                     </Text>)
         }
@@ -138,28 +141,28 @@ function CreateCharacter(props) {
                 </View>
             </Modal>
                 <View style={{flex: 1, alignItems: "center"}}>
-                    <Text>Choose Race</Text>
+                    <Text style={styles.label}>Choose Race</Text>
                     <Picker
                         selectedValue={characterObj.race}
-                        style={styles.selector}
+                        style={styles.selector }
                         onValueChange={(itemValue) => {setCharacterObj({...characterObj, race: itemValue, subrace: null, image: null});}}>
                         <Picker.Item label="Choose Race" value={null} />
                         <Picker.Item label="Human" value="human" />
                         <Picker.Item label="Robot" value="robot" />
                     </Picker>
-                    <Text>Choose Subrace</Text>
+                    <Text style={styles.label}>Choose Subrace</Text>
                     {setSubrace(characterObj.race)}
-                    <Text>Enter Name</Text>
+                    <Text style={styles.label}>Enter Name</Text>
                     <TextInput
                         onChangeText={text => setCharacterObj({...characterObj, name: text})}
                         value={characterObj.name}
                         style={styles.input}
                     />
-                    <Text>Choose Appearance</Text>
+                    <Text style={styles.label}>Choose Appearance</Text>
                     <TouchableOpacity onPress={toggleModal}>
                         <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={characterObj.image} />
                     </TouchableOpacity>
-                    <Text>Choose Class</Text>
+                    <Text style={styles.label}>Choose Class</Text>
                     <Picker
                         selectedValue={characterObj.classType}
                         style={styles.selector}
@@ -180,9 +183,9 @@ function CreateCharacter(props) {
 }
 
 const styles = StyleSheet.create({
-    selector: {
+    selector: {...boxStyle.box,
         height: 60, 
-        width: 300
+        width: 300,
     },
     input: {
         fontSize: 16,
@@ -191,7 +194,19 @@ const styles = StyleSheet.create({
         width: 150,
         height: 40,
         marginBottom: 10,
-      }
+    },
+    label: {
+        color: "#68a9de",
+        fontSize: 16,
+        marginTop: 10,
+    },
+    classText: {
+        ...boxStyle.box,
+        backgroundColor: "white",
+        margin: 10,
+        padding: 10
+
+    }
 })
 
 export default CreateCharacter;

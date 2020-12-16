@@ -4,6 +4,9 @@ import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";
 
+//style imports
+import {boxStyle} from "../../Components/StyleBox";
+
 //function imports
 import {db} from '../../src/config';
 
@@ -42,15 +45,13 @@ function MyCampaigns({ navigation }) {
         <ScrollView style={{flex: 1}}>
           {campaigns && campaigns.map(campaign=>{
             return (
-            <TouchableOpacity key={campaign.id} onPress={()=>{navigation.push("CampaignScreen", {campaign: campaign})}}>
-              <View key={campaign.id} style={{height: 100, width: "100%"}}>
-                <View key={campaign.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
-                  <Image
-                    source={campaign.image}
-                    style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginTop: 30}}
-                    key={campaign.id}/>
-                  <Text style={{fontSize: 20, marginLeft: 40}}>{campaign.name}</Text>
-                </View>
+            <TouchableOpacity style={styles.box} key={campaign.id} onPress={()=>{navigation.push("CampaignScreen", {campaign: campaign})}}>
+              <View key={campaign.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
+                <Image
+                  source={campaign.image}
+                  style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, marginLeft: 10, borderColor: "black"}}
+                  key={campaign.id}/>
+                <Text style={styles.name}>{campaign.name}</Text>
               </View>
             </TouchableOpacity>)
           })}
@@ -58,5 +59,16 @@ function MyCampaigns({ navigation }) {
       </View>
     );
 }
+
+const styles = StyleSheet.create({
+  name: {
+      marginLeft: 40,
+      fontSize: 25,
+      color: "#0d4d82",
+  },
+  box: {
+      height: 100, width: "95%", margin:10, ...boxStyle.box
+  }
+})
 
 export default MyCampaigns;
