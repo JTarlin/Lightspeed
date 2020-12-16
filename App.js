@@ -200,7 +200,7 @@ function App() {
             <Stack.Screen name="GameScreen" component={GameScreen} />
           </Stack.Navigator>
           ) : (
-          <Stack.Navigator initialRouteName="Foyer">
+          <Stack.Navigator initialRouteName="Foyer" headerMode="none">
             <Stack.Screen name="Foyer" component={FoyerScreen} />
             <Stack.Screen name="LogIn" component={LogInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
