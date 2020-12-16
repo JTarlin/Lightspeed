@@ -52,7 +52,7 @@ export default function JoinGame({navigation}) {
                             </View>
                             <Button 
                                 title={"JOIN"}
-                                onPress={()=>{navigation.push("AddCharToGame", {game: game}); console.log(" join players: "+game.players)}}
+                                onPress={()=>{navigation.push("AddCharToGame", {game: game})}}
                             />
                         </View>
                     </TouchableOpacity>)}

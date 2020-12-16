@@ -11,7 +11,6 @@ import {db} from '../../src/config';
 export default function AddCharToGame({navigation, ...props}) {
 
     const {game} = props.route.params;
-    console.log("game palyers:"+game.players)
 
     const [myChars, setMyChars] = React.useState(null);
     const [myCharacter, setMyCharacter] = React.useState(null);
@@ -41,7 +40,6 @@ export default function AddCharToGame({navigation, ...props}) {
     }, [navigation]); //runs on mount and whenever navigation changes
 
     function joinGame() {
-        console.log("join game");
 
         //if certain fields need to be created if empty
         if(!game.playerCharacters) {
@@ -56,10 +54,6 @@ export default function AddCharToGame({navigation, ...props}) {
         
         //add this Game's state data to the database, only if all fields are completed (no null in state)
         if(myCharacter && myContact){
-            console.log("the players are:" +game.players);
-
-            console.log("game: "+game);
-
             const gameId = game.id;
 
             //add appropriate data to game obj before push

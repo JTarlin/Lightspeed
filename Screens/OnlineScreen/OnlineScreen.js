@@ -54,7 +54,7 @@ export default function OnlineScreen({navigation}){
             {!games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20}}>Create or join a game to see it here</Text>}
             {games && games.map(game=>{
                 return(
-                    <TouchableOpacity onPress={()=>{navigation.push("GameScreen", {gameId: game.id})}} style={styles.box}>
+                    <TouchableOpacity key={game.id} onPress={()=>{navigation.push("GameScreen", {gameId: game.id})}} style={styles.box}>
                         <View key={game.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                             <Image
                                 source={game.image}

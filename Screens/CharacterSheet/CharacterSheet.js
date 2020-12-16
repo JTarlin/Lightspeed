@@ -9,7 +9,6 @@ export default function CharacterSheet ({navigation, ...props}){
 
     function firstLetterCap(string) {
         const letterArray = string.split("");
-        console.log(letterArray);
         letterArray[0]=letterArray[0].toUpperCase();
         const str = letterArray.join("");
         return str;
