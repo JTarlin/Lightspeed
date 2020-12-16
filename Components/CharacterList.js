@@ -17,7 +17,7 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
 
     const includeAddButton = (char)=>{
         if(addFunction) {
-            return <Button style={{alignSelf: "flex-end"}} onPress={()=>{console.log("pressed character: "+char.name);           
+            return <Button style={{alignSelf: "flex-end"}} onPress={()=>{           
             logCharId(char.id);
             addFunction(char);
         }} title={"Add"}/>;
@@ -31,7 +31,6 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
 
     return (
         <ScrollView style={{flex: 1}}>
-        {console.log("characters re-rendering")}
           {characters && characters.map(char=>{
             if(!selectedCharIds.includes(char.id)){
                 return (

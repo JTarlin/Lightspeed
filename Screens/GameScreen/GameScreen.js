@@ -19,7 +19,6 @@ export default function GameScreen({navigation, ...props}) {
         db.ref('allGames/'+gameId).once("value", function(snapshot) {
           if(snapshot.exists()) { //if this game exists
             setGame(snapshot.val()); //set the game to data from db
-            console.log(snapshot.val().players)
           }
         })
     }
@@ -30,7 +29,6 @@ export default function GameScreen({navigation, ...props}) {
 
 
     function playersAndCharacters(players, characters, contacts) {
-        console.log("p and c: "+players.length)
         const charCards=[]
         for(let i=0; i<players.length; i++){
             charCards.push(
