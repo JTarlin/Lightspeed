@@ -3,6 +3,7 @@ import { Button, View, ScrollView, Image, Text, StyleSheet, TouchableOpacity} fr
 import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";
+import GetUserName from "../../Components/GetUserName";
 
 //style imports
 import {boxStyle} from "../../Components/StyleBox";
@@ -14,6 +15,7 @@ export default function OnlineScreen({navigation}){
 
 
     const [games, setGames] = React.useState(null);
+    const [currentUsername, setCurrentUsername] = React.useState(null);
 
     //get the current signed-in user's token from appropriate context
     const userToken = React.useContext(UserTokenContext);
@@ -34,6 +36,30 @@ export default function OnlineScreen({navigation}){
 
         return unsubscribe;
     }, [navigation]); //runs on mount and whenever navigation changes
+
+   
+
+    function getUserName(token) {
+        
+        db.ref('users').once("value", function(snapshot) {
+            if(snapshot.exists()) { //if we have users
+                let userArray=Object.values(snapshot.val()); //get array of user values as "user"
+                for(const user of userArray) {
+                    if(user.userToken===token) {
+                        setCurrentUsername(user.username);
+                    }
+                }
+            }
+        })
+
+        if(currentUsername) {
+            console.log(currentUsername)
+            return currentUsername;
+            
+        }
+    }
+
+    getUserName(userToken);
 
     return (
         <View style={{flex:1}}>
@@ -60,7 +86,11 @@ export default function OnlineScreen({navigation}){
                                 source={game.image}
                                 style={{height: 80, width: 80, borderRadius: 40, borderWidth: 3, borderColor: "black", marginLeft: 10}}
                                 key={game.id}/>
-                            <Text style={styles.name}>{game.name}</Text>
+                                <View style={{marginLeft: 40}} >
+                                    <Text style={styles.name}>{game.name}</Text>
+                                    <Text>Creator: {getUserName(game.creator)}</Text>
+                                    
+                                </View>
                         </View>
                     </TouchableOpacity>
                 )
@@ -72,7 +102,6 @@ export default function OnlineScreen({navigation}){
 
 const styles = StyleSheet.create({
     name: {
-        marginLeft: 40,
         fontSize: 25,
         color: "#0d4d82",
     },
