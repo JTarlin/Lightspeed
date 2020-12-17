@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, ScrollView, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { Button, View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";

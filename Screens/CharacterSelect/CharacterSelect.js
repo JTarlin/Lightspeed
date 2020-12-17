@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View} from 'react-native';
 
 import CustomHeader from "../../Components/CustomHeader";
 import CharacterDisplay from "../../Components/CharacterDisplay";

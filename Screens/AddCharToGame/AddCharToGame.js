@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, ScrollView} from 'react-native';
 
 //component imports
 import CustomHeader from "../../Components/CustomHeader";
