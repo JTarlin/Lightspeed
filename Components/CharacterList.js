@@ -35,9 +35,9 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
             if(!selectedCharIds.includes(char.id)){
                 return (
                     <TouchableOpacity key={char.id} onPress={()=>{navigation.navigate("CharacterSheet", {character: char})}}  >
-                        <View key={char.id} style={styles.box}>
-                            <View key={char.id} style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
-                                <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: "black"}} key={char.id}/>
+                        <View style={styles.box}>
+                            <View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
+                                <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: "black"}}/>
                                 <Text style={{...styles.name}}>{char.name}</Text>
                                 {includeAddButton(char)}
                             </View>

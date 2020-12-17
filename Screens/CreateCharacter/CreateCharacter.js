@@ -154,7 +154,7 @@ function CreateCharacter(props) {
                     </Picker>
                     <Text style={styles.label}>Choose Subrace</Text>
                     {setSubrace(characterObj.race)}
-                    <Text style={styles.label}>Enter Name</Text>
+                    <Text style={styles.label}>Enter Character Name</Text>
                     <TextInput
                         onChangeText={text => setCharacterObj({...characterObj, name: text})}
                         value={characterObj.name}
