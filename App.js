@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {AuthContext, UserTokenContext} from "./Components/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Buffer } from 'buffer';
 import uuid from 'react-native-uuid';
+
+LogBox.ignoreAllLogs(); //disable timer warnings from firebase
 
 global.Buffer = Buffer; // very important
 

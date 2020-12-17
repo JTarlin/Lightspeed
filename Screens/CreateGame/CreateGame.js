@@ -17,7 +17,6 @@ export default function CreateGame({navigation}) {
     const [campaigns, setCampaigns] = React.useState(null);
 
     const [userToken, username] = React.useContext(UserTokenContext);
-    console.log(username);
     const loadCampaigns=()=>{
         db.ref('allCampaigns/' + userToken).once("value", function(snapshot) {
           if(snapshot.exists()) { //if we have campaigns for this user
