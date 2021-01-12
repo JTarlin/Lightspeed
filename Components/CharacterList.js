@@ -38,8 +38,10 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
                         <View style={styles.box}>
                             <View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
                                 <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: "black"}}/>
-                                <Text style={{...styles.name}}>{char.name}</Text>
-                                {includeAddButton(char)}
+                                <View style={{display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "space-between", marginRight: 20}}>
+                                    <Text style={{...styles.name}}>{char.name}</Text>
+                                    {includeAddButton(char)}
+                                </View>
                             </View>
                             
                         </View>
