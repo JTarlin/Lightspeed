@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 
 import CustomHeader from "../../Components/CustomHeader";
 import CharacterList from "../../Components/CharacterList";

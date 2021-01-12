@@ -131,6 +131,9 @@ function CreateCampaign(props) {
                 <View style={{marginTop: 20}}>
                     <Button onPress={publishCampaign} title="C R E A T E"/>
                 </View>
+                <View style={{marginTop: 20}}>
+                    <Button onPress={navigation.push("CreateNetwork")} title="network"/>
+                </View>
             </View>
         </View>
     );
