@@ -3,6 +3,7 @@ import { View} from 'react-native';
 
 import CustomHeader from "../../Components/CustomHeader";
 import CharacterDisplay from "../../Components/CharacterDisplay";
+import { colors } from '../../Components/Colors';
 
 export default function CharacterSelect(props) {
 
@@ -11,7 +12,7 @@ export default function CharacterSelect(props) {
     const selectedChars = props.route.params.selectedChars;
 
     return(
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor: colors.midnight}}>
             <CustomHeader title={"C H A R A C T E R S"} goBack={()=>{navigation.goBack()}}/>
             <CharacterDisplay addCharacter={addCharacter} selectedChars={selectedChars}/>
         </View>
