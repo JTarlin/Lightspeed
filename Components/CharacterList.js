@@ -43,7 +43,7 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
                     <TouchableOpacity key={char.id} onPress={()=>{navigation.navigate("CharacterSheet", {character: char})}}  >
                         <View style={styles.box}>
                             <View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
-                                <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: "black"}}/>
+                                <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: colors.cyan}}/>
                                 <View style={{display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "space-between", marginRight: 20}}>
                                     <Text style={{...styles.name}}>{char.name}</Text>
                                     {includeAddButton(char)}
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     name: {
         marginLeft: 40,
         fontSize: 25,
-        color: colors.blue,
+        color: colors.cyan,
     },
     box: {
         height: 100, width: "95%", margin:10, ...boxStyle.box
