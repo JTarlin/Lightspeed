@@ -9,6 +9,7 @@ import {boxStyle} from "../../Components/StyleBox";
 
 //function imports
 import {db} from '../../src/config';
+import { colors } from '../../Components/Colors';
 
 function MyCampaigns({ navigation }) {
 
@@ -36,12 +37,13 @@ function MyCampaigns({ navigation }) {
   }, [navigation]); //runs on mount and whenever navigation changes
 
     return (
-      <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column" }}>
+      <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column", backgroundColor: colors.midnight }}>
         <CustomHeader title={"C A M P A I G N S"} goBack={()=>{navigation.goBack()}}/>
         <Button
           title="Create New Campaign"
           onPress={() => navigation.push('CreateCampaign')}
         />
+        {!campaigns && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20, color: colors.cyan}}>Create a campaign to see it here</Text>}
         <ScrollView style={{flex: 1}}>
           {campaigns && campaigns.map(campaign=>{
             return (

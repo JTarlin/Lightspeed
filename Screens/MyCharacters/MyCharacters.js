@@ -43,6 +43,7 @@ function MyCharacters({ navigation }) {
             title="Create New Character"
             onPress={() => navigation.push('CreateCharacter')}
           />
+        {!characters && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20, color: colors.cyan}}>Create a character to see them here</Text>}
         <CharacterList characters={characters} addFunction={null} selectedChars={[]}/>
       </View>
     );

@@ -10,9 +10,11 @@ import {UserTokenContext} from "../../Components/context";
 
 //style imports
 import {boxStyle} from "../../Components/StyleBox";
+import { colors } from '../../Components/Colors';
 
 //function imports
 import {db} from '../../src/config';
+
 
 function CreateCharacter(props) {
 
@@ -126,7 +128,7 @@ function CreateCharacter(props) {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column" }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column", backgroundColor: colors.midnight }}>
             <CustomHeader title={"C R E A T E  C H A R A C T E R"} goBack={()=>{navigation.goBack()}}/>
                 
             <Modal

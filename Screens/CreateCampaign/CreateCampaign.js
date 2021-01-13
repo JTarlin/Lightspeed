@@ -6,10 +6,12 @@ import uuid from 'react-native-uuid';
 import ImageDisplay from "../../Components/ImageDisplay";
 import CustomHeader from "../../Components/CustomHeader";
 import {UserTokenContext} from "../../Components/context";
-import CharacterDisplay from "../../Components/CharacterDisplay";
 
 //function imports
 import {db} from '../../src/config';
+
+//style imports
+import { colors } from '../../Components/Colors';
 
 function CreateCampaign(props) {
 
@@ -87,7 +89,7 @@ function CreateCampaign(props) {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column" }}>
+        <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column", backgroundColor: colors.midnight }}>
             <CustomHeader title={"C R E A T E  C A M P A I G N"} goBack={()=>{navigation.goBack()}}/>
             
             {/* modal for the image picker */}
