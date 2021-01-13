@@ -16,7 +16,7 @@ function CustomHeader(props) {
         <TouchableOpacity onPress={goBack} >
           <Image source={backIcon} style={{height: 20 , width: 40, marginLeft: 20}}/>
         </TouchableOpacity>
-        <View style={{marginLeft: 40, display: "flex", justifyContent: "center"}}>
+        <View style={{marginLeft: 20, marginRight: 80, display: "flex", alignItems: "center", flexGrow: 1}}>
           <TitleText >{title}</TitleText>
         </View>
       </View>
