@@ -7,6 +7,9 @@ import {UserTokenContext} from "../../Components/context";
 //function imports
 import {db} from '../../src/config';
 
+//style imports
+import { colors } from '../../Components/Colors';
+
 function MyCharacters({ navigation }) {
 
   //get the current signed-in user's token from appropriate context
@@ -34,7 +37,7 @@ function MyCharacters({ navigation }) {
   }, [navigation]); //runs on mount and whenever navigation changes
 
     return (
-      <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column" }}>
+      <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column", backgroundColor: colors.midnight }}>
         <CustomHeader title={"C H A R A C T E R S"} goBack={()=>{navigation.goBack()}}/>
         <Button
             title="Create New Character"
