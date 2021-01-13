@@ -14,7 +14,6 @@ function CustomHeader(props) {
 
     const fontSizer = (title)=>{
       const titleChars = title.length;
-      console.log("TITLECHARS: ",titleChars);
       if(titleChars>24){
         return 50-titleChars;
       }
@@ -23,7 +22,7 @@ function CustomHeader(props) {
     
 
     return (
-    <View style={{height: 60}}>
+    <View style={{height: 60, backgroundColor: colors.midnight}}>
       <View style={{ flex: 1, flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start'}}>
         <TouchableOpacity onPress={goBack} >
           <Image source={backIcon} style={{height: 20 , width: 40, marginLeft: 20}}/>

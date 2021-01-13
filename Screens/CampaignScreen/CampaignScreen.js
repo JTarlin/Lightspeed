@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 
 import CustomHeader from "../../Components/CustomHeader";
 import CharacterList from "../../Components/CharacterList";
+import { colors } from "../../Components/Colors";
 
 export default function CampaignScreen({navigation, ...props}) {
 
     const {campaign} = props.route.params;
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor: colors.midnight}}>
             <CustomHeader title={campaign.name} goBack={()=>{navigation.goBack()}}/>
             <ScrollView style={{flex: 1}} contentContainerStyle={{alignItems: "center"}}>
                 <Image source={campaign.image} style={styles.mainImage}/>

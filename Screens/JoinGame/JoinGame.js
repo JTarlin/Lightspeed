@@ -9,6 +9,7 @@ import {UserTokenContext} from "../../Components/context";
 import {boxStyle} from "../../Components/StyleBox";
 //function imports
 import {db} from '../../src/config';
+import { colors } from '../../Components/Colors';
 
 export default function JoinGame({navigation}) {
 
@@ -33,10 +34,10 @@ export default function JoinGame({navigation}) {
     }
 
     return (
-        <View>
+        <View style={{backgroundColor: colors.midnight}}>
             <CustomHeader title={"J O I N  G A M E"} goBack={()=>{navigation.goBack()}}/>
             <ScrollView >
-                <Text style={{textAlign: "center", fontSize: 20}}> Select a Game to Join</Text>
+                <Text style={{textAlign: "center", fontSize: 20, color: colors.cyan}}> Select a Game to Join</Text>
                 {games && games.map(game=>{
                     if(game.creator!==username) {
                     return (

@@ -9,6 +9,7 @@ import {boxStyle} from "../../Components/StyleBox";
 
 //function imports
 import {db} from '../../src/config';
+import { colors } from '../../Components/Colors';
 
 export default function OnlineScreen({navigation}){
 
@@ -36,8 +37,8 @@ export default function OnlineScreen({navigation}){
     }, [navigation]); //runs on mount and whenever navigation changes
 
     return (
-        <View style={{flex:1}}>
-            <CustomHeader title={"O N L I N E"} goBack={()=>{navigation.goBack()}}/>
+        <View style={{flex:1, backgroundColor: colors.midnight}}>
+            <CustomHeader title={"G A M E S"} goBack={()=>{navigation.goBack()}}/>
             <View style={{marginBottom:10}}>
                 <Button
                     onPress={()=>{navigation.push("CreateGame")}} 
@@ -51,7 +52,7 @@ export default function OnlineScreen({navigation}){
                 title={"JOIN NEW GAME"}
             />
             {games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20}}>My Games:</Text>}
-            {!games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20}}>Create or join a game to see it here</Text>}
+            {!games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20, color: colors.cyan}}>Create or join a game to see it here</Text>}
             {games && games.map(game=>{
                 return(
                     <TouchableOpacity key={game.id} onPress={()=>{navigation.push("GameScreen", {gameId: game.id})}} style={styles.box}>

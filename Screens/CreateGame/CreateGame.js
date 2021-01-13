@@ -8,6 +8,7 @@ import {UserTokenContext} from "../../Components/context";
 
 //function imports
 import {db} from '../../src/config';
+import { colors } from '../../Components/Colors';
 
 export default function CreateGame({navigation}) {
 
@@ -67,7 +68,7 @@ export default function CreateGame({navigation}) {
     }
 
     return (
-        <KeyboardAvoidingView style={{flex:1}} behavior={"position"} keyboardVerticalOffset={100-useWindowDimensions().height}>
+        <KeyboardAvoidingView style={{flex:1, backgroundColor: colors.midnight}} behavior={"position"} keyboardVerticalOffset={100-useWindowDimensions().height}>
             <ScrollView >
                 <CustomHeader title={"C R E A T E  G A M E"} goBack={()=>{navigation.goBack()}}/>
                 <View style={{flex:1, alignItems: "center"}}>
@@ -82,7 +83,7 @@ export default function CreateGame({navigation}) {
                     <View style={{width: "100%"}}>
                         <Text style={{...styles.label, textAlign: "center"}}>Choose Campaign</Text>
                         <View style={{height: 170, width: "100%", marginBottom: 20}}>
-                            <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", backgroundColor: "#98b8eb", ...styles.slidePicker}}>
+                            <ScrollView horizontal={true} style={styles.slidePicker}>
                                 {campaigns && campaigns.map(campaign=>{
                                     return (
                                     <TouchableOpacity
@@ -143,8 +144,9 @@ export default function CreateGame({navigation}) {
 const styles = StyleSheet.create({
     input: {
         fontSize: 16,
-        borderColor: "black",
-        borderWidth: 1,
+        borderColor: colors.cyan,
+        borderWidth: 2,
+        backgroundColor: colors.blue,
         width: 150,
         height: 40,
         marginBottom: 10,
@@ -156,7 +158,10 @@ const styles = StyleSheet.create({
     },
     slidePicker: {
         padding: 10,
-        backgroundColor: "#98b8eb", 
+        backgroundColor: colors.blue,
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
+        borderColor: colors.cyan, 
         flex: 1,
     },
     gameName: {
