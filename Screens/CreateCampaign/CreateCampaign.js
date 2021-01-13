@@ -116,12 +116,12 @@ function CreateCampaign(props) {
                 />
                 <Text style={styles.label}>Choose Campaign Thumbnail</Text>
                 <TouchableOpacity onPress={toggleThumbModal}>
-                    <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={campaignObj.image} />
+                    <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: colors.cyan, backgroundColor: "white"}} source={campaignObj.image} />
                 </TouchableOpacity>
 
                 <Text style={styles.label}>Add Characters to Campaign</Text>
                 <View style={{height: 150, width: "100%"}}>
-                    <ScrollView horizontal={true} style={{borderTop: "2px solid black", borderBottom: "2px solid black", ...styles.slidePicker}}>
+                    <ScrollView horizontal={true} style={styles.slidePicker}>
                         <TouchableOpacity onPress={addCharacters} style={{marginRight: 15}}>
                             <View style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black", backgroundColor: "white"}}/>
                             <Text style={styles.charName}>Add New</Text>
@@ -149,8 +149,9 @@ const styles = StyleSheet.create({
     },
     input: {
         fontSize: 16,
-        borderColor: "black",
-        borderWidth: 1,
+        borderColor: colors.cyan,
+        backgroundColor: colors.blue,
+        borderWidth: 2,
         width: 150,
         height: 40,
         marginBottom: 10,
@@ -162,8 +163,11 @@ const styles = StyleSheet.create({
     },
     slidePicker: {
         padding: 10,
-        backgroundColor: "#98b8eb", 
+        backgroundColor: colors.blue, 
         flex: 1,
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
+        borderColor: colors.cyan,
     },
     charName: {
         textAlign: "center",
