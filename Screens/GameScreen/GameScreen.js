@@ -6,6 +6,7 @@ import CharacterList from "../../Components/CharacterList";
 
 //function imports
 import {db} from '../../src/config';
+import { colors } from "../../Components/Colors";
 
 
 export default function GameScreen({navigation, ...props}) {
@@ -53,7 +54,7 @@ export default function GameScreen({navigation, ...props}) {
     }
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor: colors.midnight}}>
             {game && <View style={{flex:1}}>
                 <CustomHeader title={game.name} goBack={()=>{navigation.goBack()}}/>
                 <ScrollView style={{flex: 1}} contentContainerStyle={{alignItems: "center"}}>
@@ -83,12 +84,13 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 24,
-        color: "#98b8eb",
+        color: colors.cyan,
     },
     playerCard: {
         width: "95%",
         borderWidth: 3,
-        borderColor: "#0d4d82",
+        borderColor: colors.cyan,
+        backgroundColor: colors.blue,
         marginLeft: 10,
         padding: 15,
         marginTop: 10,
@@ -97,15 +99,15 @@ const styles = StyleSheet.create({
     label: {
         textAlign: "center",
         fontSize: 20,
-        color: "#98b8eb"
+        color: colors.cyan,
     },
     playerCharIcon: {
-        height: 100, width: 100, borderRadius: 50, borderColor: "black", borderWidth: 3,
+        height: 100, width: 100, borderRadius: 50, borderColor: colors.cyan, borderWidth: 3,
         marginTop: 10,
     },
     playerName: {
         textAlign: "center",
         fontSize: 26,
-        color: "#0d4d82"
+        color: colors.cyan
     }
 });
