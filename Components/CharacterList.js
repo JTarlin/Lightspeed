@@ -4,6 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 
 //style imports
 import {boxStyle} from "./StyleBox";
+import {colors} from "./Colors";
+
+//icon imports
+import {addIcon} from "./Icons";
 
 export default function CharacterList({characters, addFunction, selectedChars}) {
 
@@ -17,10 +21,12 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
 
     const includeAddButton = (char)=>{
         if(addFunction) {
-            return <Button key={char.id} style={{alignSelf: "flex-end"}} onPress={()=>{           
+            return <TouchableOpacity key={char.id} onPress={()=>{           
             logCharId(char.id);
             addFunction(char);
-        }} title={"Add"}/>;
+        }} >
+            <Image source={addIcon} style={styles.add}/>
+        </ TouchableOpacity>;
         }
     }
 
@@ -37,9 +43,11 @@ export default function CharacterList({characters, addFunction, selectedChars}) 
                     <TouchableOpacity key={char.id} onPress={()=>{navigation.navigate("CharacterSheet", {character: char})}}  >
                         <View style={styles.box}>
                             <View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
-                                <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: "black"}}/>
-                                <Text style={{...styles.name}}>{char.name}</Text>
-                                {includeAddButton(char)}
+                                <Image source={char.image} style={{height: 80, width: 80, marginLeft: 10, borderRadius: 40, borderWidth: 3, borderColor: colors.cyan}}/>
+                                <View style={{display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "space-between", marginRight: 20}}>
+                                    <Text style={{...styles.name}}>{char.name}</Text>
+                                    {includeAddButton(char)}
+                                </View>
                             </View>
                             
                         </View>
@@ -54,9 +62,16 @@ const styles = StyleSheet.create({
     name: {
         marginLeft: 40,
         fontSize: 25,
-        color: "#0d4d82",
+        color: colors.cyan,
     },
     box: {
         height: 100, width: "95%", margin:10, ...boxStyle.box
+    }, 
+    add: {
+        height: 40, 
+        width: 40,
+        borderColor: colors.cyan,
+        borderRadius: 20,
+        borderWidth: 3,
     }
 })
