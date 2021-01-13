@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import { colors } from "../../Components/Colors";
 
 import CustomHeader from "../../Components/CustomHeader";
 
@@ -15,7 +16,7 @@ export default function CharacterSheet ({navigation, ...props}){
     }
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor: colors.midnight}}>
             <CustomHeader title={character.name} goBack={()=>{navigation.goBack()}}/>
             <ScrollView style={{flex: 1,}} contentContainerStyle={{alignItems: "center"}}>
                 <Image source={character.image} style={styles.mainImage}/>
@@ -42,7 +43,8 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 24,
-        color: "#98b8eb",
+        color: colors.cyan,
+        fontWeight: "bold",
     },
     statbox: {
         width: "80%",
@@ -51,6 +53,6 @@ const styles = StyleSheet.create({
     },
     statline: {
         fontSize: 20,
-        color: "black"
+        color: colors.cyan
     }
 });

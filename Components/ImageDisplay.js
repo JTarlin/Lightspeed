@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { View, Text, Image, TouchableOpacity} from 'react-native';
+import { View, Image, TouchableOpacity} from 'react-native';
 
 import SubraceImages from "./SubraceImages";
 import CampaignImages from "./CampaignImages";
+import { colors } from './Colors';
 
 // const drawnPath = "../assets/images/drawn/";
 

@@ -150,9 +150,9 @@ function CreateCharacter(props) {
                         selectedValue={characterObj.race}
                         style={styles.selector }
                         onValueChange={(itemValue) => {setCharacterObj({...characterObj, race: itemValue, subrace: null, image: null});}}>
-                        <Picker.Item label="Choose Race" value={null} />
-                        <Picker.Item label="Human" value="human" />
-                        <Picker.Item label="Robot" value="robot" />
+                        <Picker.Item label="Choose Race" value={null}/>
+                        <Picker.Item label="Human" value="human"/>
+                        <Picker.Item label="Robot" value="robot"/>
                     </Picker>
                     <Text style={styles.label}>Choose Subrace</Text>
                     {setSubrace(characterObj.race)}
@@ -164,7 +164,7 @@ function CreateCharacter(props) {
                     />
                     <Text style={styles.label}>Choose Appearance</Text>
                     <TouchableOpacity onPress={toggleModal}>
-                        <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: "black"}} source={characterObj.image} />
+                        <Image style={{height: 100, width: 100, borderRadius: 50, borderWidth: 3, borderColor: colors.cyan, backgroundColor: "white"}} source={characterObj.image} />
                     </TouchableOpacity>
                     <Text style={styles.label}>Choose Class</Text>
                     <Picker
@@ -187,14 +187,16 @@ function CreateCharacter(props) {
 }
 
 const styles = StyleSheet.create({
-    selector: {...boxStyle.box,
+    selector: {
         height: 60, 
         width: 300,
+        backgroundColor: colors.blue
     },
     input: {
         fontSize: 16,
-        borderColor: "black",
-        borderWidth: 1,
+        borderColor: colors.cyan,
+        backgroundColor: colors.blue,
+        borderWidth: 2,
         width: 150,
         height: 40,
         marginBottom: 10,
@@ -206,7 +208,8 @@ const styles = StyleSheet.create({
     },
     classText: {
         ...boxStyle.box,
-        backgroundColor: "white",
+        backgroundColor: colors.blue,
+        color: "black",
         margin: 10,
         padding: 10
 
