@@ -1,13 +1,25 @@
 import * as React from 'react';
-import { View, TouchableOpacity, Image} from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, Text} from 'react-native';
 import TitleText from "./TitleText";
 
 //import icon images
-import {backIcon} from "./Icons"
+import {backIcon} from "./Icons";
+
+//import style
+import {colors} from "./Colors";
 
 function CustomHeader(props) {
 
     const {title, goBack} = props;
+
+    const fontSizer = (title)=>{
+      const titleChars = title.length;
+      console.log("TITLECHARS: ",titleChars);
+      if(titleChars>24){
+        return 50-titleChars;
+      }
+      return 24;
+    }
     
 
     return (
@@ -17,7 +29,7 @@ function CustomHeader(props) {
           <Image source={backIcon} style={{height: 20 , width: 40, marginLeft: 20}}/>
         </TouchableOpacity>
         <View style={{marginLeft: 20, marginRight: 80, display: "flex", alignItems: "center", flexGrow: 1}}>
-          <TitleText >{title}</TitleText>
+          <Text style={{color: colors.cyan, fontWeight: "bold", fontSize: fontSizer(title)}}>{title}</Text>
         </View>
       </View>
     </View>

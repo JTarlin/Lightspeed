@@ -15,8 +15,6 @@ const styles = StyleSheet.create({
       fontSize: 24,
       color: colors.cyan,
       fontWeight: "bold",
-      display: "flex",
-      justifyContent: "center",
     }
   })
 
