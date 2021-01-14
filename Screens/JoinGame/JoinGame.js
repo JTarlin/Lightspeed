@@ -61,10 +61,11 @@ export default function JoinGame({navigation}) {
                                     <Text style={{fontSize: fontSizer(game.name), ...styles.name}}>{game.name}</Text>
                                     <Text>Creator: {game.creator}</Text>
                                 </View>
-                                <Button 
-                                    title={"JOIN"}
-                                    onPress={()=>{navigation.push("AddCharToGame", {game: game})}}
-                                />
+                                <TouchableOpacity onPress={()=>{navigation.push("AddCharToGame", {game: game})}}>
+                                    <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 50, width: 60, borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+                                        <Text style={{color: colors.cyan, fontWeight: "bold"}}>Join</Text>
+                                    </View>
+                                </TouchableOpacity >
                             </View>
                             
                         </View>

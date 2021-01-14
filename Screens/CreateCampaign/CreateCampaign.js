@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Modal, Button, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Modal, TouchableOpacity, Image, TextInput, ScrollView} from 'react-native';
 import uuid from 'react-native-uuid';
 
 //component imports
@@ -131,11 +131,13 @@ function CreateCampaign(props) {
                 </View>
                 
                 <View style={{marginTop: 20}}>
-                    <Button onPress={publishCampaign} title="C R E A T E"/>
+                    <TouchableOpacity onPress={publishCampaign}>
+                        <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 40, width: 100, borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+                            <Text style={{color: colors.cyan, fontWeight: "bold"}}>Create!</Text>
+                        </View>
+                    </TouchableOpacity >
                 </View>
-                <View style={{marginTop: 20}}>
-                    <Button onPress={navigation.push("CreateNetwork")} title="network"/>
-                </View>
+                
             </View>
         </View>
     );
