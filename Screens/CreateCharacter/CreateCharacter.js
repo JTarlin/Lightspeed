@@ -179,7 +179,12 @@ function CreateCharacter(props) {
                         <Picker.Item label="Trader" value="trader" />
                     </Picker>
                     {setClassType(characterObj.classType)}
-                    <Button onPress={publishCharacter} title="C R E A T E"/>
+
+                    <TouchableOpacity onPress={publishCharacter}>
+                        <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 40, width: 100, borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+                            <Text style={{color: colors.cyan, fontWeight: "bold"}}>Create!</Text>
+                        </View>
+                    </TouchableOpacity >
                 </View>
         </View>
     );

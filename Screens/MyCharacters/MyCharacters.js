@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, ScrollView, Image, Text, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity} from 'react-native';
 import CustomHeader from "../../Components/CustomHeader";
 import CharacterList from "../../Components/CharacterList";
 import {UserTokenContext} from "../../Components/context";
@@ -39,10 +39,11 @@ function MyCharacters({ navigation }) {
     return (
       <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column", backgroundColor: colors.midnight }}>
         <CustomHeader title={"C H A R A C T E R S"} goBack={()=>{navigation.goBack()}}/>
-        <Button
-            title="Create New Character"
-            onPress={() => navigation.push('CreateCharacter')}
-          />
+        <TouchableOpacity onPress={() => navigation.push('CreateCharacter')}>
+          <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 40, width: "100%", borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+            <Text style={{color: colors.cyan, fontWeight: "bold"}}>Create New Character</Text>
+          </View>
+        </TouchableOpacity >
         {!characters && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20, color: colors.cyan}}>Create a character to see them here</Text>}
         <CharacterList characters={characters} addFunction={null} selectedChars={[]}/>
       </View>

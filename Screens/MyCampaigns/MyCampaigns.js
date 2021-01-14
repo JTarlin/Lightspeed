@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, ScrollView, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, ScrollView, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";
@@ -39,10 +39,11 @@ function MyCampaigns({ navigation }) {
     return (
       <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: "column", backgroundColor: colors.midnight }}>
         <CustomHeader title={"C A M P A I G N S"} goBack={()=>{navigation.goBack()}}/>
-        <Button
-          title="Create New Campaign"
-          onPress={() => navigation.push('CreateCampaign')}
-        />
+        <TouchableOpacity onPress={() => navigation.push('CreateCampaign')}>
+          <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 40, width: "100%", borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+            <Text style={{color: colors.cyan, fontWeight: "bold"}}>Create New Campaign</Text>
+          </View>
+        </TouchableOpacity >
         {!campaigns && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20, color: colors.cyan}}>Create a campaign to see it here</Text>}
         <ScrollView style={{flex: 1}}>
           {campaigns && campaigns.map(campaign=>{

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, ScrollView, Image, Text, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView, useWindowDimensions} from 'react-native';
+import { View, ScrollView, Image, Text, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView, useWindowDimensions} from 'react-native';
 import SwitchSelector from "react-native-switch-selector";
 import CustomHeader from "../../Components/CustomHeader";
 import uuid from 'react-native-uuid';
@@ -134,7 +134,11 @@ export default function CreateGame({navigation}) {
                         </View>
                         }
                     </View>
-                    <Button onPress={()=>{createGame()}} title={"CREATE GAME"} />
+                    <TouchableOpacity onPress={()=>{createGame()}}>
+                        <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 40, width: 100, borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+                            <Text style={{color: colors.cyan, fontWeight: "bold"}}>Create Game!</Text>
+                        </View>
+                    </TouchableOpacity >
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>

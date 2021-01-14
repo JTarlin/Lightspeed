@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import CustomHeader from "../../Components/CustomHeader";
 
 import {UserTokenContext} from "../../Components/context";
@@ -40,17 +40,17 @@ export default function OnlineScreen({navigation}){
         <View style={{flex:1, backgroundColor: colors.midnight}}>
             <CustomHeader title={"G A M E S"} goBack={()=>{navigation.goBack()}}/>
             <View style={{marginBottom:10}}>
-                <Button
-                    onPress={()=>{navigation.push("CreateGame")}} 
-                    style={{height: 60, width: "100%", backgroundColor: "#98b8eb"}}
-                    title={"CREATE NEW GAME"}
-                />
+                <TouchableOpacity onPress={() => navigation.push('CreateGame')}>
+                    <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 40, width: "100%", borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+                        <Text style={{color: colors.cyan, fontWeight: "bold"}}>Create New Game</Text>
+                    </View>
+                </TouchableOpacity >
             </View>
-            <Button
-                onPress={()=>{navigation.push("JoinGame")}} 
-                style={{height: 60, width: "100%", backgroundColor: "#98b8eb", marginBottom: 10}}
-                title={"JOIN NEW GAME"}
-            />
+            <TouchableOpacity onPress={() => navigation.push('JoinGame')}>
+                    <View style={{display: "flex", justifyContent: "center", alignItems: "center", height: 40, width: "100%", borderWidth: 2, borderColor: colors.cyan, backgroundColor: colors.blue, borderRadius: 5}}>
+                        <Text style={{color: colors.cyan, fontWeight: "bold"}}>Join New Game</Text>
+                    </View>
+                </TouchableOpacity >
             {games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20}}>My Games:</Text>}
             {!games && <Text style={{fontSize: 20, textAlign: "center", marginTop: 20, color: colors.cyan}}>Create or join a game to see it here</Text>}
             {games && games.map(game=>{
